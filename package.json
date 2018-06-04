@@ -1,0 +1,22 @@
+{
+  "name": "coclear-cdp",
+  "version": "1.0.0",
+  "description": "An interactive radial stacked bar chart depicting cdp product data.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "livereload": "livereload . -w 1000 -d",
+    "sass": "node-sass --watch scss -o css",
+    "serve": "http-server -a localhost --cors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spry-group/coclear-cdp.git"
+  },
+  "author": "Paolo Dvorchik",
+  "license": "SEE LICENSE IN license.md",
+  "bugs": {
+    "url": "https://github.com/spry-group/coclear-cdp/issues"
+  },
+  "homepage": "https://github.com/spry-group/coclear-cdp#readme"
+}

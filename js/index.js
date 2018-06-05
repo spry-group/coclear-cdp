@@ -1,7 +1,8 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
-var categories = ["Stage data not available", "Downstream", "Manufacturing", "Upstream"];
+var categories = ["stage data not available", "downstream", "manufacturing", "upstream"];
 var x, y, z, g; // x scale, y scale, z scale, and svg group
+var tooltip;
 
 d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:Z?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
 
@@ -18,6 +19,7 @@ function init(error, sourceData) {
     innerRadius = 180,
     outerRadius = Math.min(width, height) / 2,
     g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    tooltip = d3.select('#tooltip');
 
   var x = d3.scaleBand()
             .range([0, 2 * Math.PI])
@@ -47,7 +49,7 @@ function init(error, sourceData) {
           .endAngle(function(d) { return x(d.data.name) + x.bandwidth(); })
           .padAngle(0.01)
           .padRadius(innerRadius)
-      );
+      ).on("mouseover", showToolTip);
 
   // Place holder for the delta circles
   // var label = g.append("g")
@@ -92,13 +94,41 @@ function init(error, sourceData) {
       .text("Carbon Intensity");
 }
 
+function showToolTip(d) {
+  // Update tooltip data
+  d3.select('#tt-company').html(d.data.company);
+  d3.select('#tt-name').html(d.data.name);
+  d3.select('#tt-desc').html(d.data.desc);
+
+  d3.select('#tt-footprintChangePer').html(d.data.footprintChangePer);
+  d3.select('#tt-footprintChangeReason').html(d.data.footprintChangeReason);
+
+  d3.select('#tt-carbonInt').html(d.data.carbonInt);
+  d3.select('#tt-upstreamPer').html(d.data.upstreamPer);
+  d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer);
+  d3.select('#tt-downstreamPer').html(d.data.downstreamPer);
+
+  d3.select('#tt-weight').html(d.data.weight);
+  d3.select('#tt-weightSource').html(d.data.weightSource);
+  d3.select('#tt-footprint').html(d.data.footprint);
+  d3.select('#tt-protocol').html(d.data.protocol);
+
+  // Show tooltip
+  tooltip.transition()
+         .duration(250)
+         .style("opacity", .9);
+  tooltip.style("left", (d3.event.pageX) + "px")
+         .style("top", (d3.event.pageY - 28) + "px");
+}
 
 function cleanAndParseData(sourceData) {
   sourceData = sourceData.values;
   sourceData.shift(); // Discard copyright notice
   let cols = sourceData.shift();
   let colIndexes = {
+    company: cols.indexOf("Organisation"),
     name: cols.indexOf("Product name"),
+    desc: cols.indexOf("Product detail"),
     footprint: cols.indexOf("Product CO2e footprint (kg CO2e)"),
     upstream: cols.indexOf("CoClear-Footprint %Upstream"),
     operation: cols.indexOf("CoClear-Footprint %Operation"),
@@ -107,6 +137,12 @@ function cleanAndParseData(sourceData) {
     endOfLife: cols.indexOf("CoClear-Footprint %EndOfLife"),
     industry: cols.indexOf("CoClear-Sector Mapping"),
     year: cols.indexOf("Year of reporting"),
+    carbonInt: cols.indexOf("CoClear-Product Carbon Intensity"),
+    weight: cols.indexOf("Product FU Weight (kg)"),
+    weightSource: cols.indexOf("CoClear Product Weight Source"),
+    protocol: cols.indexOf("CoClear Protocol Mapping"),
+    footprintChangePer: cols.indexOf("Footprint %Change"),
+    footprintChangeReason: cols.indexOf("Reason for change"),
   }
 
   // Normally we'd use the spread operator with a push and map, but keeping this ES5 for now
@@ -118,14 +154,25 @@ function cleanAndParseData(sourceData) {
 
 function mapRow(colIndexes, row) {
   let obj = {
+    company: row[colIndexes.company],
     name: row[colIndexes.name],
+    desc: row[colIndexes.desc],
     industry: row[colIndexes.industry],
     year: parseInt(row[colIndexes.year]),
     footprint: parseFloat(row[colIndexes.footprint]),
+    upstreamPer: row[colIndexes.upstream],
+    manufacturingPer: row[colIndexes.operation],
+    downstreamPer: row[colIndexes.downstream],
+    carbonInt: row[colIndexes.carbonInt],
+    weight: row[colIndexes.weight],
+    weightSource: row[colIndexes.weightSource],
+    protocol: row[colIndexes.protocol],
+    footprintChangePer: row[colIndexes.footprintChangePer],
+    footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
-  obj["Upstream"]                 = (parseFloat(row[colIndexes.upstream]) || 0 / 100) * obj.footprint;
-  obj["Manufacturing"]            = (parseFloat(row[colIndexes.operation]) || 0 / 100) * obj.footprint;
-  obj["Downstream"]               = (parseFloat(row[colIndexes.downstream]) || 0 / 100) * obj.footprint;
-  obj["Stage data not available"] = (obj["Upstream"] + obj["Manufacturing"] + obj["Downstream"]) === 0 ? obj.footprint : 0;
+  obj["upstream"]                 = (parseFloat(row[colIndexes.upstream]) || 0 / 100) * obj.footprint;
+  obj["manufacturing"]            = (parseFloat(row[colIndexes.operation]) || 0 / 100) * obj.footprint;
+  obj["downstream"]               = (parseFloat(row[colIndexes.downstream]) || 0 / 100) * obj.footprint;
+  obj["stage data not available"] = (obj["upstream"] + obj["manufacturing"] + obj["downstream"]) === 0 ? obj.footprint : 0;
   return obj;
 }

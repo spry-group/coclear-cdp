@@ -8,6 +8,38 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <svg id="chart" width="960" height="960" font-family="sans-serif" font-size="10"></svg>
+  <div class="text-center container-fluid">
+      <svg id="chart" width="960" height="960" font-family="sans-serif" font-size="10"></svg>
+  </div>
+  <div id="tooltip" style="opacity: 0">
+    <div class="row">
+      <div class="col-6">
+        <div id="tt-company" class="font-weight-bold"></div>
+        <div id="tt-name" class="font-weight-bold"></div>
+        <div id="tt-desc"></div>
+      </div>
+      <div class="col-6">
+        <div class="font-weight-bold">GHG Footprint change</div>
+        <div>
+          <span></span>
+          <span id="tt-footprintChangePer"></span> in product emissions as a result of:
+          <span id="tt-footprintChangeReason"></span>
+        </div>
+      </div>
+      <div class="col-6">
+        <div><span class="font-weight-bold">Carbon Intensity*: </span> <span id="tt-carbonInt"></span></div>
+        <div><span class="font-weight-bold">Upstream emissions: </span> <span id="tt-upstreamPer"></span></div>
+        <div><span class="font-weight-bold">Manufacturing emissions: </span> <span id="tt-manufacturingPer"></span></div>
+        <div><span class="font-weight-bold">Downstream emissions: </span> <span id="tt-downstreamPer"></span></div>
+      </div>
+      <div class="col-6">
+        <div><span class="font-weight-bold">Product FU Weight (kg): </span> <span id="tt-weight"></span></div>
+        <div><span class="font-weight-bold">CoClear Product Weight Source: </span> <span id="tt-weightSource"></span></div>
+        <div><span class="font-weight-bold">Produce CO2e Footprint (kg CO2e): </span> <span id="tt-footprint"></span></div>
+        <div><span class="font-weight-bold">CoClear Protocol Mapping: </span> <span id="tt-protocol"></span></div>
+        <div>Data source from...</div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

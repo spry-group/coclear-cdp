@@ -32,8 +32,9 @@ function init(error, sourceData) {
             .range(["#686667", "#949fbd", "#755270", "#fd8d00"]);
 
   x.domain(data.map(function(d) { return d.name; }));
-  y.domain([0, d3.max(data, function(d) { return d.footprint; })]);
+  y.domain(d3.extent(data, function(d) { return d.footprint; }));
   z.domain(categories);
+
   g.append("g")
     .selectAll("g")
     .data(d3.stack().keys(categories)(data))
@@ -170,9 +171,9 @@ function mapRow(colIndexes, row) {
     footprintChangePer: row[colIndexes.footprintChangePer],
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
-  obj["upstream"]                 = (parseFloat(row[colIndexes.upstream]) || 0 / 100) * obj.footprint;
-  obj["manufacturing"]            = (parseFloat(row[colIndexes.operation]) || 0 / 100) * obj.footprint;
-  obj["downstream"]               = (parseFloat(row[colIndexes.downstream]) || 0 / 100) * obj.footprint;
+  obj["upstream"]                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.footprint;
+  obj["manufacturing"]            = ((parseFloat(row[colIndexes.operation]) || 0) / 100) * obj.footprint;
+  obj["downstream"]               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
   obj["stage data not available"] = (obj["upstream"] + obj["manufacturing"] + obj["downstream"]) === 0 ? obj.footprint : 0;
   return obj;
 }

@@ -9,6 +9,31 @@
 </head>
 <body>
   <div class="text-center container-fluid">
+      <form id="filters">
+          <div class="form-row">
+            <div class="col">
+                <select class="form-control">
+                  <option>Order by Company name</option>
+                  <option>Order by CO2e Footprint</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control">
+                  <option>Food & Beverage Industry</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control">
+                  <option>View All Years</option>
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control">
+                  <option>View All Companies</option>
+                </select>
+            </div>
+          </div>
+      </form>
       <svg id="chart" width="960" height="960" font-family="sans-serif" font-size="10"></svg>
   </div>
   <div id="tooltip" style="opacity: 0">

@@ -1,3 +1,7 @@
+#filters {
+  width: 960px;
+  margin: 0 auto 50px auto; }
+
 #tooltip {
   pointer-events: none;
   cursor: pointer;

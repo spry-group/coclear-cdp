@@ -1,5 +1,6 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
+var fullData = [];
 var categories = ["stage data not available", "downstream", "manufacturing", "upstream"];
 var companies;
 var industries;
@@ -149,10 +150,8 @@ function cleanAndParseData(sourceData) {
     footprintChangeReason: cols.indexOf("Reason for change"),
   }
 
-  // Normally we'd use the spread operator with a push and map, but keeping this ES5 for now
-  sourceData.forEach(function(row) {
-    data.push(mapRow(colIndexes, row));
-  });
+  dataFull.push(...sourceData.map((row) => mapRow(colIndexes, row)));
+  data.push(...dataFull);
 }
 
 function mapRow(colIndexes, row) {

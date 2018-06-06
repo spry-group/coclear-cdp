@@ -102,20 +102,19 @@ function createChart(data, categories, g) {
     tooltip.transition()
             .duration(250)
             .style("opacity", .9);
-    // Force tooltip to stay within chart boundaries
+    // Dynamically set tooltip position for best fit
     tooltip.style("left", function() {
-              if (d3.event.offsetX - ttWidth > 0) {
-                return d3.event.pageX - ttWidth - 10 + "px";
-              }
-              return d3.event.pageX + 10 + "px";
-            })
-            .style("top", function() {
-              let ttHeight = tooltip.node().getBoundingClientRect().height;
-              if (height - d3.event.offsetY - 10 - ttHeight < 0) {
-                return d3.event.pageY - ttHeight - 10 + "px";
-              }
-              return d3.event.pageY + 10 + "px";
-            });
+      if (d3.event.offsetX > width / 2) {
+        return d3.event.pageX - ttWidth - 10 + "px";
+      }
+      return d3.event.pageX + 10 + "px";
+    })
+    .style("top", function() {
+      if (d3.event.offsetY > height / 2) {
+        return d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 + "px";
+      }
+      return d3.event.pageY + 10 + "px";
+    });
   }
 }
 

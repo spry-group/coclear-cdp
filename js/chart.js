@@ -4,7 +4,8 @@ function createChart(data, categories, g) {
       height = + svg.attr("height"),
       innerRadius = 180,
       outerRadius = Math.min(width, height) / 2,
-      tooltip = d3.select('#tooltip');
+      tooltip = d3.select('#tooltip'),
+      ttWidth = + tooltip.attr("width");
 
   g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -101,8 +102,20 @@ function createChart(data, categories, g) {
     tooltip.transition()
             .duration(250)
             .style("opacity", .9);
-    tooltip.style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 28) + "px");
+    // Force tooltip to stay within chart boundaries
+    tooltip.style("left", function() {
+              if (d3.event.offsetX - ttWidth > 0) {
+                return d3.event.pageX - ttWidth - 10 + "px";
+              }
+              return d3.event.pageX + 10 + "px";
+            })
+            .style("top", function() {
+              let ttHeight = tooltip.node().getBoundingClientRect().height;
+              if (height - d3.event.offsetY - 10 - ttHeight < 0) {
+                return d3.event.pageY - ttHeight - 10 + "px";
+              }
+              return d3.event.pageY + 10 + "px";
+            });
   }
 }
 

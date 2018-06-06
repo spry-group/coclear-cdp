@@ -14,9 +14,9 @@
       <form id="filters">
           <div class="form-row">
             <div class="col">
-                <select class="form-control">
-                  <option>Order by Company name</option>
-                  <option>Order by CO2e Footprint</option>
+                <select id="select-sort" class="form-control">
+                  <option value="company">Order by Company name</option>
+                  <option value="footprint">Order by CO2e Footprint</option>
                 </select>
             </div>
             <div class="col">
@@ -38,7 +38,7 @@
       </form>
       <svg id="chart" width="960" height="960" font-family="sans-serif" font-size="10"></svg>
   </div>
-  <div id="tooltip" style="opacity: 0">
+  <div id="tooltip" width="460" style="opacity: 0">
     <div class="row">
       <div class="col-6">
         <div id="tt-company" class="font-weight-bold"></div>
@@ -64,7 +64,6 @@
         <div><span class="font-weight-bold">CoClear Product Weight Source: </span> <span id="tt-weightSource"></span></div>
         <div><span class="font-weight-bold">Produce CO2e Footprint (kg CO2e): </span> <span id="tt-footprint"></span></div>
         <div><span class="font-weight-bold">CoClear Protocol Mapping: </span> <span id="tt-protocol"></span></div>
-        <div>Data source from...</div>
       </div>
     </div>
   </div>

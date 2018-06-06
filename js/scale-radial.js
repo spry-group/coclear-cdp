@@ -1,4 +1,4 @@
-// Radial scale taken from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
+// Radial scale modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 (function(global, factory) {
   typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("d3-scale")) :
   typeof define === "function" && define.amd ? define(["exports", "d3-scale"], factory) :

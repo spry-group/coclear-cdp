@@ -1,6 +1,9 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
 var categories = ["stage data not available", "downstream", "manufacturing", "upstream"];
+var companies;
+var industries;
+var years;
 var x, y, z, g; // x scale, y scale, z scale, and svg group
 var tooltip;
 
@@ -12,6 +15,7 @@ function init(error, sourceData) {
   }
 
   cleanAndParseData(sourceData);
+  setupFilters(data);
 
   var svg = d3.select("#chart"),
     width = + svg.attr("width"),
@@ -146,7 +150,6 @@ function cleanAndParseData(sourceData) {
   }
 
   // Normally we'd use the spread operator with a push and map, but keeping this ES5 for now
-  sourceData = sourceData.filter((row) => row[colIndexes.industry] === 'Chemicals'); //Temp for testing
   sourceData.forEach(function(row) {
     data.push(mapRow(colIndexes, row));
   });
@@ -175,4 +178,34 @@ function mapRow(colIndexes, row) {
   obj["downstream"]               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
   obj["stage data not available"] = (obj["upstream"] + obj["manufacturing"] + obj["downstream"]) === 0 ? obj.footprint : 0;
   return obj;
+}
+
+function setupFilters(data) {
+  let companySelect = d3.select('#select-company');
+  let industrySelect = d3.select('#select-industry');
+  let yearSelect = d3.select('#select-year');
+
+  companies = getUniqueValues(data, 'company');
+  industries = getUniqueValues(data, 'industry');
+  years = getUniqueValues(data, 'year');
+
+  populateSelect(companySelect, companies);
+  populateSelect(industrySelect, industries, ' Industry');
+  populateSelect(yearSelect, years);
+}
+
+// Takes an array of objects and a key to map to.
+// Returns an array of unique values
+function getUniqueValues(data, key) {
+ return data.map(d => d[key]).filter((ele, pos, arr) => {
+   return arr.indexOf(ele) === pos;
+ }).sort();
+}
+
+function populateSelect(select, data, append) {
+  append = append || '';
+  select.selectAll('option')
+        .data(data).enter()
+        .append('option')
+        .text(function(d) { return d + append; });
 }

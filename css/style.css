@@ -1,4 +1,6 @@
 #tooltip {
+  pointer-events: none;
+  cursor: pointer;
   position: absolute;
   width: 480px;
   padding: 20px 15px 30px 15px;

@@ -23,17 +23,16 @@ function init(error, sourceData) {
 
   var x = d3.scaleBand()
             .range([0, 2 * Math.PI])
+            .domain(data.map(function(d) { return d.name; }))
             .align(0);
 
   var y = d3.scaleRadial()
-            .range([innerRadius, outerRadius]);
+            .range([innerRadius, outerRadius])
+            .domain(d3.extent(data, function(d) { return d.footprint; }));
 
   var z = d3.scaleOrdinal()
-            .range(["#686667", "#949fbd", "#755270", "#fd8d00"]);
-
-  x.domain(data.map(function(d) { return d.name; }));
-  y.domain(d3.extent(data, function(d) { return d.footprint; }));
-  z.domain(categories);
+            .range(["#686667", "#949fbd", "#755270", "#fd8d00"])
+            .domain(categories);
 
   g.append("g")
     .selectAll("g")

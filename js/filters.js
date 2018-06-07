@@ -5,7 +5,7 @@ var filters = {
   company: 'all'
 }
 function createFilters(data, sortCompany, sortFootprint) {
-  const sortSelect = d3.select('select-sort');
+  const sortSelect = d3.select('#select-sort');
   const industrySelect = d3.select('#select-industry');
   const yearSelect = d3.select('#select-year');
   const companySelect = d3.select('#select-company');
@@ -30,7 +30,8 @@ function getUniqueValues(data, key) {
 function populateSelect(select, data, append) {
   append = append || '';
   select.selectAll('option')
-        .data(data).enter()
+        .data(data, function(d) { return d; }) // Need the custom id mapping so we don't override the defaults
+        .enter()
         .append('option')
           .attr('value', (d) => d)
           .text((d) => d + append);

@@ -1,21 +1,20 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
-var categories = ["stage data not available", "downstream", "manufacturing", "upstream"];
-var g; // svg group
 var companies;
 var industries;
 var years;
 
-d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:Z?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
+document.addEventListener("DOMContentLoaded", function(e) {
+  d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:Z?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
+});
 
 function init(error, sourceData) {
   if (error) {
     return alert('Something went wrong, please try again later.');
   }
-
   cleanAndParseData(sourceData);
-  createChart(data, categories, g);
-  createFilters(data, g);
+  createChart(data);
+  createFilters(data, sortCompany, sortFootprint);
 }
 
 function cleanAndParseData(sourceData) {

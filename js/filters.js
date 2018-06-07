@@ -1,4 +1,4 @@
-function createFilters(data, g) {
+function createFilters(data, sortCompany, sortFootprint) {
   let companySelect = d3.select('#select-company');
   let industrySelect = d3.select('#select-industry');
   let yearSelect = d3.select('#select-year');
@@ -10,6 +10,7 @@ function createFilters(data, g) {
   populateSelect(companySelect, companies);
   populateSelect(industrySelect, industries, ' Industry');
   populateSelect(yearSelect, years);
+  updateData(data, sortCompany, sortFootprint);
 }
 
 // Takes an array of objects and a key to map to.
@@ -25,5 +26,10 @@ function populateSelect(select, data, append) {
   select.selectAll('option')
         .data(data).enter()
         .append('option')
-        .text(function(d) { return d + append; });
+          .attr('value', (d) => d)
+          .text((d) => d + append);
+}
+
+function updateData(data, sortCompany, sortFootprint) {
+  let newData = data.sort(sortFootprint);
 }

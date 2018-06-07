@@ -1,16 +1,22 @@
+var filters = {
+  sort: 'company',
+  industry: 'all',
+  year: 2015,
+  company: 'all'
+}
 function createFilters(data, sortCompany, sortFootprint) {
-  let companySelect = d3.select('#select-company');
-  let industrySelect = d3.select('#select-industry');
-  let yearSelect = d3.select('#select-year');
+  const sortSelect = d3.select('select-sort');
+  const industrySelect = d3.select('#select-industry');
+  const yearSelect = d3.select('#select-year');
+  const companySelect = d3.select('#select-company');
 
-  companies = getUniqueValues(data, 'company');
-  industries = getUniqueValues(data, 'industry');
-  years = getUniqueValues(data, 'year');
-
-  populateSelect(companySelect, companies);
-  populateSelect(industrySelect, industries, ' Industry');
-  populateSelect(yearSelect, years);
-  updateData(data, sortCompany, sortFootprint);
+  populateSelect(industrySelect, getUniqueValues(data, 'industry'), ' Industry');
+  populateSelect(yearSelect, getUniqueValues(data, 'year'));
+  populateSelect(companySelect, getUniqueValues(data, 'company'));
+  bindSelect(sortSelect, 'sort');
+  bindSelect(industrySelect, 'industry');
+  bindSelect(yearSelect, 'year');
+  bindSelect(companySelect, 'company');
 }
 
 // Takes an array of objects and a key to map to.
@@ -30,6 +36,20 @@ function populateSelect(select, data, append) {
           .text((d) => d + append);
 }
 
-function updateData(data, sortCompany, sortFootprint) {
-  let newData = data.sort(sortFootprint);
+function bindSelect(ele, key) {
+  ele.on('change', function() {
+    filters[key] = ele.node().value;
+    updateData();
+  });
+}
+
+function updateData() {
+  let newData = [...data];
+  ['industry', 'year', 'company'].forEach(key => {
+    if (filters[key] !== 'all') {
+      newData = newData.filter(d => d[key] === filters[key]);
+    }
+  });
+  newData.sort(filters.sort === 'company' ? sortCompany : sortFootprint);
+  updateChart(newData);
 }

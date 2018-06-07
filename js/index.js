@@ -42,6 +42,7 @@ function cleanAndParseData(sourceData) {
   }
 
   data.push(...sourceData.map((row) => mapRow(colIndexes, row)));
+  data.sort(sortCompany);
 }
 
 function mapRow(colIndexes, row) {
@@ -67,4 +68,14 @@ function mapRow(colIndexes, row) {
   obj["downstream"]               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
   obj["stage data not available"] = (obj["upstream"] + obj["manufacturing"] + obj["downstream"]) === 0 ? obj.footprint : 0;
   return obj;
+}
+
+function sortCompany(a, b) {
+  a = a.company.toUpperCase();
+  b = b.company.toUpperCase();
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+function sortFootprint(a, b) {
+  return a.footprint < b.footprint ? 1 : a.footprint > b.footprint ? -1 : 0;
 }

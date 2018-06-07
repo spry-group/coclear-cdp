@@ -2,7 +2,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     svg,
     width,
     height,
-    innerRadius = 180,
+    innerRadius = 100,
     outerRadius,
     tooltip,
     ttWidth,
@@ -66,7 +66,8 @@ function updateChart(updatedData) {
               .innerRadius(function(d) { return y(d[0]); })
               .outerRadius(function(d) { return y(d[1]); })
               .startAngle(function(d) { return x(d.data.name); })
-              .endAngle(function(d) { return x(d.data.name) + x.bandwidth(); })
+                                                        // cap band width to ensure it doesn't look like a pie chart
+              .endAngle(function(d) { return x(d.data.name) + (x.bandwidth() < 0.5 ? x.bandwidth() : 0.5); })
               .padAngle(0.01)
               .padRadius(innerRadius)
             ).on('mouseover', showToolTip);

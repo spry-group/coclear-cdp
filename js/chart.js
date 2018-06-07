@@ -9,7 +9,8 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     g, // Svg group
     x, // x scale (companies)
     y, // y scale (footprint)
-    z; // z scale (categories)
+    z, // z scale (categories)
+    yAxis;
 
 
 function createChart(data) {
@@ -33,36 +34,11 @@ function createChart(data) {
             .range(['#686667', '#949fbd', '#755270', '#fd8d00'])
             .domain(categories);
 
-  var yAxis = g.append('g').attr('text-anchor', 'middle');
-  updateChart(data);
-
-  var yTick = yAxis.selectAll('g')
-                   .data(y.ticks(5).slice(1))
-                   .enter().append('g');
-
-  yTick.append('circle')
-       .attr('fill', 'none')
-       .attr('stroke', '#000')
-       .attr('r', y);
-
-
-       yTick.append('text')
-       .attr('y', function(d) { return -y(d); })
-       .attr('dy', '0.35em')
-       .attr('fill', 'none')
-       .attr('stroke', '#fff')
-       .attr('stroke-width', 5)
-       .text(y.tickFormat(5, 's'));
-
-  yTick.append('text')
-       .attr('y', function(d) { return -y(d); })
-       .attr('dy', '0.35em')
-       .text(y.tickFormat(5, 's'));
-
+  yAxis = g.append('g').attr('text-anchor', 'middle');
   yAxis.append('text')
-       .attr('y', function(d) { return -y(y.ticks(5).pop()); })
-       .attr('dy', '-1em')
-       .text('Carbon Intensity');
+      .attr('dy', '-' + (height / 2 - 7) + 'px')
+      .text('Carbon Intensity');
+  updateChart(data);
 }
 
 function updateChart(updatedData) {
@@ -94,6 +70,8 @@ function updateChart(updatedData) {
               .padAngle(0.01)
               .padRadius(innerRadius)
             ).on('mouseover', showToolTip);
+
+  drawYAxis(yAxis);
 }
 
 function showToolTip(d) {
@@ -132,4 +110,33 @@ function showToolTip(d) {
     }
     return d3.event.pageY + 10 + 'px';
   });
+}
+
+function drawYAxis() {
+  // Move the axis back on top
+  yAxis.node().parentNode.append(yAxis.node());
+
+  yAxis.selectAll('g').remove();
+  var yTick = yAxis.selectAll('g')
+                   .data(y.ticks(5).slice(1));
+
+  yTickEnter = yTick.enter().append('g');
+
+  yTickEnter.append('circle')
+              .attr('fill', 'none')
+              .attr('stroke', '#000')
+              .attr('r', y)
+
+  yTickEnter.append('text')
+              .attr('y', function(d) { return -y(d); })
+              .attr('dy', '0.35em')
+              .attr('fill', 'none')
+              .attr('stroke', '#fff')
+              .attr('stroke-width', 5)
+              .text(y.tickFormat(5, 's'))
+
+  yTickEnter.append('text')
+              .attr('y', function(d) { return -y(d); })
+              .attr('dy', '0.35em')
+              .text(y.tickFormat(5, 's'));
 }

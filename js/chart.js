@@ -79,27 +79,35 @@ function createChart(data) {
        .text("Carbon Intensity");
 }
 
-function updateChart(data) {
-  x.domain(data.map(function(d) { return d.name; }));
+function updateChart(updatedData) {
+  x.domain(updatedData.map(function(d) { return d.name; }));
   y.domain(d3.extent(data, function(d) { return d.footprint; }));
 
-  g.append("g")
-    .selectAll("g")
-      .data(d3.stack().keys(categories)(data))
-      .enter().append("g")
-        .attr("fill", function(d) { return z(d.key); })
-    .selectAll("path")
-    .data(function(d) { return d; })
-    .enter().append("path")
-    .attr("d", d3.arc()
-        .innerRadius(function(d) { return y(d[0]); })
-        .outerRadius(function(d) { return y(d[1]); })
-        .startAngle(function(d) { return x(d.data.name); })
-        .endAngle(function(d) { return x(d.data.name) + x.bandwidth(); })
-        .padAngle(0.01)
-        .padRadius(innerRadius)
-    ).on("mouseover", showToolTip)
-     .exit().remove();
+  var arcs = g.selectAll('.arc')
+              .data(d3.stack().keys(categories)(updatedData));
+  arcs.exit().remove();
+
+  let arcsEnter = arcs.enter()
+                      .append('g')
+                      .attr('class', 'arc');
+
+  let paths = arcsEnter.merge(arcs)
+                       .attr('fill', function(d) { return z(d.key); })
+                       .selectAll('path')
+                       .data(function(d) { return d; });
+  paths.exit().remove();
+
+  let pathsEnter = paths.enter().append('path');
+
+  pathsEnter.merge(paths)
+            .attr('d', d3.arc()
+              .innerRadius(function(d) { return y(d[0]); })
+              .outerRadius(function(d) { return y(d[1]); })
+              .startAngle(function(d) { return x(d.data.name); })
+              .endAngle(function(d) { return x(d.data.name) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius)
+            ).on('mouseover', showToolTip);
 }
 
 function showToolTip(d) {

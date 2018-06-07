@@ -66,9 +66,8 @@ function createChart(data) {
 }
 
 function updateChart(updatedData) {
-  // /https://jsfiddle.net/ydcjjydv/1/
   x.domain(updatedData.map(function(d) { return d.name; }));
-  y.domain(d3.extent(data, function(d) { return d.footprint; }));
+  y.domain([0, d3.max(updatedData, function(d) { return d.footprint; })]);
 
   var arcs = g.selectAll('.arc')
               .data(d3.stack().keys(categories)(updatedData));

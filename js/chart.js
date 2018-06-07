@@ -1,4 +1,4 @@
-var categories = ["stage data not available", "downstream", "manufacturing", "upstream"],
+var categories = ['stage data not available', 'downstream', 'manufacturing', 'upstream'],
     svg,
     width,
     height,
@@ -13,14 +13,14 @@ var categories = ["stage data not available", "downstream", "manufacturing", "up
 
 
 function createChart(data) {
-  svg = d3.select("#chart");
-  width = + svg.attr("width");
-  height = + svg.attr("height");
+  svg = d3.select('#chart');
+  width = + svg.attr('width');
+  height = + svg.attr('height');
   outerRadius = Math.min(width, height) / 2;
   tooltip = d3.select('#tooltip');
-  ttWidth = + tooltip.attr("width");
+  ttWidth = + tooltip.attr('width');
 
-  g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
   x = d3.scaleBand()
             .range([0, 2 * Math.PI])
@@ -30,56 +30,43 @@ function createChart(data) {
             .range([innerRadius, outerRadius])
 
   z = d3.scaleOrdinal()
-            .range(["#686667", "#949fbd", "#755270", "#fd8d00"])
+            .range(['#686667', '#949fbd', '#755270', '#fd8d00'])
             .domain(categories);
 
-  g.append("g");
-  updateChart(data)
+  var yAxis = g.append('g').attr('text-anchor', 'middle');
+  updateChart(data);
 
-
-
-  // Place holder for the delta circles
-  // var label = g.append("g")
-  //   .selectAll("g")
-  //   .data(data)
-  //   .enter().append("g")
-  //     .attr("text-anchor", "middle")
-  //     .attr("transform", function(d) { return "rotate(" + ((x(d.State) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + innerRadius + ",0)"; });
-  // label.append("text")
-  //     .attr("transform", function(d) { return (x(d.State) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(90)translate(0,16)" : "rotate(-90)translate(0,-9)"; })
-  //     .text(function(d) { return d.State; });
-
-  var yAxis = g.append("g").attr("text-anchor", "middle");
-
-  var yTick = yAxis.selectAll("g")
+  var yTick = yAxis.selectAll('g')
                    .data(y.ticks(5).slice(1))
-                   .enter().append("g");
+                   .enter().append('g');
 
-  yTick.append("circle")
-       .attr("fill", "none")
-       .attr("stroke", "#000")
-       .attr("r", y);
+  yTick.append('circle')
+       .attr('fill', 'none')
+       .attr('stroke', '#000')
+       .attr('r', y);
 
-  yTick.append("text")
-       .attr("y", function(d) { return -y(d); })
-       .attr("dy", "0.35em")
-       .attr("fill", "none")
-       .attr("stroke", "#fff")
-       .attr("stroke-width", 5)
-       .text(y.tickFormat(5, "s"));
 
-  yTick.append("text")
-       .attr("y", function(d) { return -y(d); })
-       .attr("dy", "0.35em")
-       .text(y.tickFormat(5, "s"));
+       yTick.append('text')
+       .attr('y', function(d) { return -y(d); })
+       .attr('dy', '0.35em')
+       .attr('fill', 'none')
+       .attr('stroke', '#fff')
+       .attr('stroke-width', 5)
+       .text(y.tickFormat(5, 's'));
 
-  yAxis.append("text")
-       .attr("y", function(d) { return -y(y.ticks(5).pop()); })
-       .attr("dy", "-1em")
-       .text("Carbon Intensity");
+  yTick.append('text')
+       .attr('y', function(d) { return -y(d); })
+       .attr('dy', '0.35em')
+       .text(y.tickFormat(5, 's'));
+
+  yAxis.append('text')
+       .attr('y', function(d) { return -y(y.ticks(5).pop()); })
+       .attr('dy', '-1em')
+       .text('Carbon Intensity');
 }
 
 function updateChart(updatedData) {
+  // /https://jsfiddle.net/ydcjjydv/1/
   x.domain(updatedData.map(function(d) { return d.name; }));
   y.domain(d3.extent(data, function(d) { return d.footprint; }));
 
@@ -132,18 +119,18 @@ function showToolTip(d) {
   // Show tooltip
   tooltip.transition()
           .duration(250)
-          .style("opacity", .9);
+          .style('opacity', .9);
   // Dynamically set tooltip position for best fit
-  tooltip.style("left", function() {
+  tooltip.style('left', function() {
     if (d3.event.offsetX > width / 2) {
-      return d3.event.pageX - ttWidth - 10 + "px";
+      return d3.event.pageX - ttWidth - 10 + 'px';
     }
-    return d3.event.pageX + 10 + "px";
+    return d3.event.pageX + 10 + 'px';
   })
-  .style("top", function() {
+  .style('top', function() {
     if (d3.event.offsetY > height / 2) {
-      return d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 + "px";
+      return d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 + 'px';
     }
-    return d3.event.pageY + 10 + "px";
+    return d3.event.pageY + 10 + 'px';
   });
 }

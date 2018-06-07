@@ -4,7 +4,7 @@ var companies;
 var industries;
 var years;
 
-document.addEventListener("DOMContentLoaded", function(e) {
+document.addEventListener('DOMContentLoaded', function(e) {
   d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:Z?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
 });
 
@@ -22,27 +22,28 @@ function cleanAndParseData(sourceData) {
   sourceData.shift(); // Discard copyright notice
   let cols = sourceData.shift();
   let colIndexes = {
-    company: cols.indexOf("Organisation"),
-    name: cols.indexOf("Product name"),
-    desc: cols.indexOf("Product detail"),
-    footprint: cols.indexOf("Product CO2e footprint (kg CO2e)"),
-    upstream: cols.indexOf("CoClear-Footprint %Upstream"),
-    operation: cols.indexOf("CoClear-Footprint %Operation"),
-    downstream: cols.indexOf("CoClear-Footprint %Downstream"),
-    transportation: cols.indexOf("CoClear-Footprint %Transportion"),
-    endOfLife: cols.indexOf("CoClear-Footprint %EndOfLife"),
-    industry: cols.indexOf("CoClear-Sector Mapping"),
-    year: cols.indexOf("Year of reporting"),
-    carbonInt: cols.indexOf("CoClear-Product Carbon Intensity"),
-    weight: cols.indexOf("Product FU Weight (kg)"),
-    weightSource: cols.indexOf("CoClear Product Weight Source"),
-    protocol: cols.indexOf("CoClear Protocol Mapping"),
-    footprintChangePer: cols.indexOf("Footprint %Change"),
-    footprintChangeReason: cols.indexOf("Reason for change"),
+    company: cols.indexOf('Organisation'),
+    name: cols.indexOf('Product name'),
+    desc: cols.indexOf('Product detail'),
+    footprint: cols.indexOf('Product CO2e footprint (kg CO2e)'),
+    upstream: cols.indexOf('CoClear-Footprint %Upstream'),
+    operation: cols.indexOf('CoClear-Footprint %Operation'),
+    downstream: cols.indexOf('CoClear-Footprint %Downstream'),
+    transportation: cols.indexOf('CoClear-Footprint %Transportion'),
+    endOfLife: cols.indexOf('CoClear-Footprint %EndOfLife'),
+    industry: cols.indexOf('CoClear-Sector Mapping'),
+    year: cols.indexOf('Year of reporting'),
+    carbonInt: cols.indexOf('CoClear-Product Carbon Intensity'),
+    weight: cols.indexOf('Product FU Weight (kg)'),
+    weightSource: cols.indexOf('CoClear Product Weight Source'),
+    protocol: cols.indexOf('CoClear Protocol Mapping'),
+    footprintChangePer: cols.indexOf('Footprint %Change'),
+    footprintChangeReason: cols.indexOf('Reason for change'),
   }
 
   data.push(...sourceData.map((row) => mapRow(colIndexes, row)));
   data.sort(sortCompany);
+  data = data.filter(d => d.year === 2015); // Filter down for test data
 }
 
 function mapRow(colIndexes, row) {
@@ -63,10 +64,11 @@ function mapRow(colIndexes, row) {
     footprintChangePer: row[colIndexes.footprintChangePer],
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
-  obj["upstream"]                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.footprint;
-  obj["manufacturing"]            = ((parseFloat(row[colIndexes.operation]) || 0) / 100) * obj.footprint;
-  obj["downstream"]               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
-  obj["stage data not available"] = (obj["upstream"] + obj["manufacturing"] + obj["downstream"]) === 0 ? obj.footprint : 0;
+  obj['upstream']                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.footprint;
+  obj['manufacturing']            = ((parseFloat(row[colIndexes.operation]) || 0) / 100) * obj.footprint;
+  obj['downstream']               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
+  obj['stage data not available'] = (obj['upstream'] + obj['manufacturing'] + obj['downstream']) === 0 ?
+                                      obj.footprint : 0;
   return obj;
 }
 

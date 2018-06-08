@@ -63,11 +63,11 @@ function mapRow(colIndexes, row) {
     footprintChangePer: row[colIndexes.footprintChangePer],
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
-  obj['upstream']                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.footprint;
-  obj['manufacturing']            = ((parseFloat(row[colIndexes.operation]) || 0) / 100) * obj.footprint;
-  obj['downstream']               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.footprint;
+  obj['upstream']                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.carbonInt;
+  obj['manufacturing']            = ((parseFloat(row[colIndexes.operation]) || 0) / 100) * obj.carbonInt;
+  obj['downstream']               = ((parseFloat(row[colIndexes.downstream]) || 0) / 100) * obj.carbonInt;
   obj['stage data not available'] = (obj['upstream'] + obj['manufacturing'] + obj['downstream']) === 0 ?
-                                      obj.footprint : 0;
+                                      obj.carbonInt : 0;
   return obj;
 }
 

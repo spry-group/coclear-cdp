@@ -8,7 +8,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     ttWidth,
     g, // Svg group
     x, // x scale (companies)
-    y, // y scale (footprint)
+    y, // y scale (carbon intensity)
     z, // z scale (categories)
     yAxis;
 
@@ -17,7 +17,7 @@ function createChart(data) {
   svg = d3.select('#chart');
   width = + svg.attr('width');
   height = + svg.attr('height');
-  outerRadius = Math.min(width, height) / 2;
+  outerRadius = Math.min(width, height) / 2 - 95;
   tooltip = d3.select('#tooltip');
   ttWidth = + tooltip.attr('width');
 
@@ -43,7 +43,7 @@ function createChart(data) {
 
 function updateChart(updatedData) {
   x.domain(updatedData.map(function(d) { return d.name; }));
-  y.domain([0, d3.max(updatedData, function(d) { return d.footprint; })]);
+  y.domain([0, d3.max(updatedData, function(d) { return d.carbonInt; })]);
 
   var arcs = g.selectAll('.arc')
               .data(d3.stack().keys(categories)(updatedData));
@@ -72,7 +72,7 @@ function updateChart(updatedData) {
               .padRadius(innerRadius)
             ).on('mouseover', showToolTip);
 
-  drawYAxis(yAxis);
+  drawYAxis(updatedData);
 }
 
 function showToolTip(d) {
@@ -113,13 +113,12 @@ function showToolTip(d) {
   });
 }
 
-function drawYAxis() {
+function drawYAxis(updatedData) {
   // Move the axis back on top
   yAxis.node().parentNode.append(yAxis.node());
-
   yAxis.selectAll('g').remove();
   var yTick = yAxis.selectAll('g')
-                   .data(y.ticks(5).slice(1));
+                  .data([0.1, 1, 10, 100, 300]);
 
   yTickEnter = yTick.enter().append('g');
 
@@ -134,10 +133,10 @@ function drawYAxis() {
               .attr('fill', 'none')
               .attr('stroke', '#fff')
               .attr('stroke-width', 5)
-              .text(y.tickFormat(5, 's'))
+              .text(y.tickFormat(5, '.1f'))
 
   yTickEnter.append('text')
               .attr('y', function(d) { return -y(d); })
               .attr('dy', '0.35em')
-              .text(y.tickFormat(5, 's'));
+              .text(y.tickFormat(5, '.1f'));
 }

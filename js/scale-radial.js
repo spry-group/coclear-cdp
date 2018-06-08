@@ -7,14 +7,14 @@
   'use strict';
 
   function pow(x) {
-    return Math.pow(x, 8);
+    return Math.pow(x, 10);
   }
 
   function radial() {
     var linear = d3Scale.scaleLinear();
 
     function scale(x) {
-      return Math.pow(linear(x), 1/8);
+      return Math.pow(linear(x), 1/10);
     }
 
     scale.domain = function(_) {
@@ -26,7 +26,7 @@
     };
 
     scale.range = function(_) {
-      return arguments.length ? (linear.range(_.map(pow)), scale) : linear.range().map(Math.pow(1/8));
+      return arguments.length ? (linear.range(_.map(pow)), scale) : linear.range().map(Math.pow(1/10));
     };
 
     scale.ticks = linear.ticks;

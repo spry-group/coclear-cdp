@@ -17,6 +17,7 @@ function createFilters(data, sortCompany, sortFootprint) {
   bindSelect(industrySelect, 'industry');
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
+  setYear(yearSelect, getUniqueValues(data, 'year'));
 }
 
 // Takes an array of objects and a key to map to.
@@ -39,7 +40,8 @@ function populateSelect(select, data, append) {
 
 function bindSelect(ele, key) {
   ele.on('change', function() {
-    filters[key] = ele.node().value;
+    let val = ele.node().value;
+    filters[key] = key !== 'year' || val === 'all' ? val : parseInt(val);
     updateData();
   });
 }
@@ -53,4 +55,11 @@ function updateData() {
   });
   newData.sort(filters.sort === 'company' ? sortCompany : sortFootprint);
   updateChart(newData);
+}
+
+function setYear(yearSelect, years) {
+  let currentYear = Math.max(...years);
+  document.getElementById('select-year').value = currentYear;
+  filters.year = currentYear;
+  updateData();
 }

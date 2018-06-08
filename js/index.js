@@ -43,7 +43,6 @@ function cleanAndParseData(sourceData) {
 
   data.push(...sourceData.map((row) => mapRow(colIndexes, row)));
   data.sort(sortCompany);
-  data = data.filter(d => d.year === 2015); // Filter down for test data
 }
 
 function mapRow(colIndexes, row) {

@@ -42,6 +42,7 @@ function bindSelect(ele, key) {
   ele.on('change', function() {
     let val = ele.node().value;
     filters[key] = key !== 'year' || val === 'all' ? val : parseInt(val);
+    avoidConflicts(ele, key);
     updateData();
   });
 }
@@ -62,4 +63,13 @@ function setYear(yearSelect, years) {
   document.getElementById('select-year').value = currentYear;
   filters.year = currentYear;
   updateData();
+}
+
+function avoidConflicts(ele, key) {
+  // If we set industry then reset company, and visa versa
+  if (ele.node().val !== 'all' && (key === 'industry' || key === 'company')) {
+    let conflict = key === 'industry' ? 'company' : 'industry';
+    filters[conflict] = 'all';
+    document.getElementById('select-' + conflict).value = 'all';
+  }
 }

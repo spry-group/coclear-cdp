@@ -18,7 +18,6 @@ function createFilters(data, sortCompany, sortIntensity) {
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
   setSelectDefault('year', Math.max(...getUniqueValues(data, 'year')));
-  setSelectDefault('sort', 'intensity')
 }
 
 // Takes an array of objects and a key to map to.

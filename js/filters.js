@@ -1,10 +1,10 @@
 var filters = {
-  sort: 'company',
+  sort: 'intensity',
   industry: 'all',
   year: 2015,
   company: 'all'
 }
-function createFilters(data, sortCompany, sortFootprint) {
+function createFilters(data, sortCompany, sortIntensity) {
   const sortSelect = d3.select('#select-sort');
   const industrySelect = d3.select('#select-industry');
   const yearSelect = d3.select('#select-year');
@@ -17,7 +17,8 @@ function createFilters(data, sortCompany, sortFootprint) {
   bindSelect(industrySelect, 'industry');
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
-  setYear(yearSelect, getUniqueValues(data, 'year'));
+  setSelectDefault('year', Math.max(...getUniqueValues(data, 'year')));
+  setSelectDefault('sort', 'intensity')
 }
 
 // Takes an array of objects and a key to map to.
@@ -54,14 +55,13 @@ function updateData() {
       newData = newData.filter(d => d[key] === filters[key]);
     }
   });
-  newData.sort(filters.sort === 'company' ? sortCompany : sortFootprint);
+  newData.sort(filters.sort === 'company' ? sortCompany : sortIntensity);
   updateChart(newData);
 }
 
-function setYear(yearSelect, years) {
-  let currentYear = Math.max(...years);
-  document.getElementById('select-year').value = currentYear;
-  filters.year = currentYear;
+function setSelectDefault(key, value) {
+  document.getElementById('select-' + key).value = value;
+  filters[key] = value;
   updateData();
 }
 

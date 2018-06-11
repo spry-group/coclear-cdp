@@ -14,7 +14,7 @@ function init(error, sourceData) {
   }
   cleanAndParseData(sourceData);
   createChart(data);
-  createFilters(data, sortCompany, sortFootprint);
+  createFilters(data, sortCompany, sortIntensity);
 }
 
 function cleanAndParseData(sourceData) {
@@ -56,7 +56,7 @@ function mapRow(colIndexes, row) {
     upstreamPer: row[colIndexes.upstream],
     manufacturingPer: row[colIndexes.operation],
     downstreamPer: row[colIndexes.downstream],
-    carbonInt: row[colIndexes.carbonInt],
+    carbonInt: parseFloat(row[colIndexes.carbonInt]),
     weight: row[colIndexes.weight],
     weightSource: row[colIndexes.weightSource],
     protocol: row[colIndexes.protocol],
@@ -77,6 +77,6 @@ function sortCompany(a, b) {
   return a < b ? -1 : a > b ? 1 : 0;
 }
 
-function sortFootprint(a, b) {
-  return a.footprint < b.footprint ? 1 : a.footprint > b.footprint ? -1 : 0;
+function sortIntensity(a, b) {
+  return a.carbonInt > b.carbonInt ? 1 : a.carbonInt < b.carbonInt ? -1 : 0;
 }

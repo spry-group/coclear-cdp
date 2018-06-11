@@ -17,7 +17,7 @@ function createChart(data) {
   svg = d3.select('#chart');
   width = + svg.attr('width');
   height = + svg.attr('height');
-  outerRadius = Math.min(width, height) / 2 - 95;
+  outerRadius = Math.min(width, height) / 2 - 25;
   tooltip = d3.select('#tooltip');
   ttWidth = + tooltip.attr('width');
 

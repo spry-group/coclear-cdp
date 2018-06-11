@@ -31,12 +31,17 @@ function getUniqueValues(data, key) {
 
 function populateSelect(select, data, append) {
   append = append || '';
-  select.selectAll('option')
-        .data(data, function(d) { return d; }) // Need the custom id mapping so we don't override the defaults
-        .enter()
-        .append('option')
-          .attr('value', (d) => d)
-          .text((d) => d + append);
+  var options = select.selectAll('option')
+                      // Need the custom id mapping so we don't override the defaults
+                      .data(data, function(d) { return d; });
+  options.enter()
+         .append('option')
+            .attr('value', (d) => d)
+            .text((d) => d + append);
+
+  options.exit()
+         .filter(function(d, i) { return d; }) // Filter by key instead of index
+         .remove();
 }
 
 function bindSelect(ele, key) {
@@ -44,6 +49,7 @@ function bindSelect(ele, key) {
     let val = ele.node().value;
     filters[key] = key !== 'year' || val === 'all' ? val : parseInt(val);
     avoidConflicts(ele, key);
+    filterRemainingOptions(ele, key, val);
     updateData();
   });
 }
@@ -71,5 +77,15 @@ function avoidConflicts(ele, key) {
     let conflict = key === 'industry' ? 'company' : 'industry';
     filters[conflict] = 'all';
     document.getElementById('select-' + conflict).value = 'all';
+  }
+}
+
+function filterRemainingOptions (ele, key, val) {
+  if (key === 'industry' && val !== 'all') {
+    // Only show companies in that industry in the companies select
+    populateSelect(d3.select('#select-company'), getUniqueValues(data.filter(d => d.industry === val), 'company'));
+  } else if ((key === 'company' || key === 'industry') && val === 'all')  {
+    // Add back in all companies when selecting all companies or all industries
+    populateSelect(d3.select('#select-company'), getUniqueValues(data, 'company'));
   }
 }

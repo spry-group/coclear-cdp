@@ -87,17 +87,23 @@ $max-width: 960px;
 }
 
 select.form-control {
+  font-weight: 600;
+
+  // Background
   background: rgb(255,255,255);
   background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 21%, rgba(250,250,250,1) 50%, rgba(253,253,253,1) 80%, rgba(250,250,250,1) 100%);
   background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(253,253,253,1) 21%,rgba(250,250,250,1) 50%,rgba(253,253,253,1) 80%,rgba(250,250,250,1) 100%);
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(253,253,253,1) 21%,rgba(250,250,250,1) 50%,rgba(253,253,253,1) 80%,rgba(250,250,250,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 );
-  font-weight: 600;
+
+  // Prep for custom arrow
+  padding-right: 3em;
   -o-appearance: none;
   -ms-appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
   // Get rid of bootstrap focus state
   &:focus {
     border: 1px solid #ced4da;

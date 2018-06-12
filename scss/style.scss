@@ -51,6 +51,12 @@ $max-width: 960px;
   margin: 0 auto 50px auto;
 }
 
+#chart {
+  .yAxis {
+    pointer-events: none;
+  }
+}
+
 #footer {
   width: $max-width;
   margin: 0 auto;

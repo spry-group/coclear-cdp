@@ -38,7 +38,9 @@ function createChart(data) {
             .range(['#686667', '#949fbd', '#755270', '#fd8d00'])
             .domain(categories);
 
-  yAxis = g.append('g').attr('text-anchor', 'middle');
+  yAxis = g.append('g')
+           .attr('text-anchor', 'middle')
+           .attr('class', 'yAxis');
 
   chartTitle = g.append('g')
                 .attr('class', 'title');

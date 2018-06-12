@@ -45,7 +45,7 @@ function createChart(data) {
 
   chartTitle.append('text')
               .text('Carbon Intensity')
-              .attr('dy', '-' + (width / 2 - 10) + 'px')
+              .attr('dy', '-' + (width / 2 - 12) + 'px')
               .attr('dx', '-64px')
               .attr('font-size', '1.5em')
               .attr('font-weight', '700')
@@ -55,7 +55,7 @@ function createChart(data) {
 
   chartTitle.append('text')
       .text('Carbon Intensity')
-      .attr('dy', '-' + (width / 2 - 10) + 'px')
+      .attr('dy', '-' + (width / 2 - 12) + 'px')
       .attr('dx', '-64px')
       .attr('font-size', '1.5em')
       .attr('font-weight', '700');

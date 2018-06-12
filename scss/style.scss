@@ -5,13 +5,9 @@ $upstream: #fd8d00;
 $manufacturing: #755270;
 $downstream: #949fbd;
 $notAvailable: #686667;
-
+$increase: #f32033;
+$decrease: #097625;
 $max-width: 960px;
-
-#filters {
-  width: $max-width;
-  margin: 0 auto 50px auto;
-}
 
 #header {
   font-size: 0.75em;
@@ -50,6 +46,11 @@ $max-width: 960px;
   }
 }
 
+#filters {
+  width: $max-width;
+  margin: 0 auto 50px auto;
+}
+
 #footer {
   width: $max-width;
   text-align: left;
@@ -83,6 +84,22 @@ $max-width: 960px;
   h5 {
     font-size: 1.125em;
     margin: 0;
+  }
+}
+
+.deltaCircle {
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.5em;
+
+  &.increase {
+    background-color: $increase;
+  }
+
+  &.decrease {
+    background-color: $decrease;
   }
 }
 

@@ -2,7 +2,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     svg,
     width,
     height,
-    innerRadius = 100,
+    innerRadius = 150,
     outerRadius,
     tooltip,
     ttWidth,
@@ -23,6 +23,8 @@ function createChart(data) {
   ttWidth = + tooltip.attr('width');
 
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+  g.append('g')
+   .attr('class', 'deltaCircles')
 
   x = d3.scaleBand()
             .range([0, 2 * Math.PI])
@@ -46,6 +48,7 @@ function updateChart(updatedData) {
   x.domain(updatedData.map(function(d) { return d.id; }));
   y.domain([0, d3.max(updatedData, function(d) { return d.carbonInt; })]);
 
+  // Bars
   var arcs = g.selectAll('.arc')
               .data(d3.stack().keys(categories)(updatedData));
   arcs.exit().remove();
@@ -74,6 +77,33 @@ function updateChart(updatedData) {
             ).on('mouseover', showToolTip)
              .on('mouseout', removeToolTip);
 
+  // Delta circles
+  let circleRadius = innerRadius / updatedData.length * 0.75;
+      circleRadius = circleRadius < 1 ? 1 : circleRadius;
+
+  let emissionDeltas = g.select('.deltaCircles')
+                        .selectAll('.emissionDelta')
+                        .data(updatedData.filter(d => d.footprintChangePer));
+  emissionDeltas.exit().remove();
+
+  let emissionDeltasEnter = emissionDeltas.enter()
+                                          .append('circle')
+                                            .attr('class', 'emissionDelta')
+  emissionDeltasEnter.exit().remove();
+
+  let circles = emissionDeltasEnter.merge(emissionDeltas)
+                                   .attr('fill', function(d) {
+                                     return d.footprintChangePer <= 0 ? '#097625' : '#f32033';
+                                   })
+                                   .attr('stroke', 'none')
+                                   .attr('r', circleRadius)
+                                   .attr('transform', function(d) {
+                                      return 'rotate(' + (
+                                        ((x(d.id) + x.bandwidth() / 2) * 180 - circleRadius) / Math.PI - 90
+                                      ) + ') translate(' + (innerRadius - circleRadius * 2.5) + ', 0)';
+                                   });
+  circles.exit().remove();
+
   drawYAxis(updatedData);
 }
 
@@ -84,7 +114,14 @@ function showToolTip(d) {
   d3.select('#tt-name').html(d.data.name);
   d3.select('#tt-desc').html(d.data.desc);
 
-  d3.select('#tt-footprintChangePer').html(d.data.footprintChangePer);
+  if (d.data.footprintChangePer) {
+    let html = '<span class="deltaCircle ' + (d.data.footprintChangePer <= 0 ? 'decrease' : 'increase') + '"></span>' +
+                d.data.footprintChangePer + '% in product emissions as a result of: ' + d.data.footprintChangeReason;
+    d3.select('#tt-footprintChange').html(html);
+  } else {
+    d3.select('#tt-footprintChange').html('No change / no data');
+  }
+
   d3.select('#tt-footprintChangeReason').html(d.data.footprintChangeReason);
 
   d3.select('#tt-carbonInt').html(d.data.carbonInt);

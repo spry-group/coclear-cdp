@@ -1,7 +1,3 @@
-#filters {
-  width: 960px;
-  margin: 0 auto 50px auto; }
-
 #header {
   font-size: 0.75em;
   padding: 2em 1.8em;
@@ -27,6 +23,10 @@
       background-color: #949fbd; }
     #header .key.key-notAvailable {
       background-color: #686667; }
+
+#filters {
+  width: 960px;
+  margin: 0 auto 50px auto; }
 
 #footer {
   width: 960px;
@@ -55,6 +55,17 @@
   #tooltip h5 {
     font-size: 1.125em;
     margin: 0; }
+
+.deltaCircle {
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.5em; }
+  .deltaCircle.increase {
+    background-color: #f32033; }
+  .deltaCircle.decrease {
+    background-color: #097625; }
 
 select.form-control {
   font-weight: 600;

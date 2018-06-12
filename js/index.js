@@ -63,7 +63,7 @@ function mapRow(colIndexes, row) {
     weight: row[colIndexes.weight],
     weightSource: row[colIndexes.weightSource],
     protocol: row[colIndexes.protocol],
-    footprintChangePer: row[colIndexes.footprintChangePer],
+    footprintChangePer: parseFloat(row[colIndexes.footprintChangePer]),
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
   obj['upstream']                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.carbonInt;

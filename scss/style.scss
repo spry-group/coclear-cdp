@@ -1,3 +1,6 @@
+$light-grey: #CCCCCC;
+$mid-grey: #767676;
+
 #filters {
   width: 960px;
   margin: 0 auto 50px auto;
@@ -13,3 +16,50 @@
   background: #fff;
   border: 1px #999 solid;
 }
+
+select.form-control {
+  background: rgb(255,255,255);
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 21%, rgba(250,250,250,1) 50%, rgba(253,253,253,1) 80%, rgba(250,250,250,1) 100%);
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(253,253,253,1) 21%,rgba(250,250,250,1) 50%,rgba(253,253,253,1) 80%,rgba(250,250,250,1) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(253,253,253,1) 21%,rgba(250,250,250,1) 50%,rgba(253,253,253,1) 80%,rgba(250,250,250,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 );
+  font-weight: 600;
+  -o-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  // Get rid of bootstrap focus state
+  &:focus {
+    border: 1px solid #ced4da;
+    box-shadow: none;
+  }
+
+}
+
+// Cheat to add in a stylized arrow and line on select boxes
+.select-wrapper:before, .select-wrapper:after {
+  position: absolute;
+  font-size: 1.5em;
+  pointer-events: none;
+}
+
+.select-wrapper:before {
+  content: '|';
+  color: $light-grey;
+  top: -0.1rem;
+  right: 2.9rem;
+  font-weight: 100;
+}
+
+.select-wrapper:after {
+  content: '';
+  top: 0.75rem;
+  right: 1.08rem;
+  height: 1.10rem;
+  width: 1.10rem;
+  display: inline-block;
+  background: url("../img/chevron.png") no-repeat;
+  background-size: contain;
+}
+

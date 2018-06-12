@@ -11,3 +11,41 @@
   font: 12px sans-serif;
   background: #fff;
   border: 1px #999 solid; }
+
+select.form-control {
+  background: white;
+  background: -moz-linear-gradient(top, white 0%, #fdfdfd 21%, #fafafa 50%, #fdfdfd 80%, #fafafa 100%);
+  background: -webkit-linear-gradient(top, white 0%, #fdfdfd 21%, #fafafa 50%, #fdfdfd 80%, #fafafa 100%);
+  background: linear-gradient(to bottom, white 0%, #fdfdfd 21%, #fafafa 50%, #fdfdfd 80%, #fafafa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 );
+  font-weight: 600;
+  -o-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+  select.form-control:focus {
+    border: 1px solid #ced4da;
+    box-shadow: none; }
+
+.select-wrapper:before, .select-wrapper:after {
+  position: absolute;
+  font-size: 1.5em;
+  pointer-events: none; }
+
+.select-wrapper:before {
+  content: '|';
+  color: #CCCCCC;
+  top: -0.1rem;
+  right: 2.9rem;
+  font-weight: 100; }
+
+.select-wrapper:after {
+  content: '';
+  top: 0.75rem;
+  right: 1.08rem;
+  height: 1.10rem;
+  width: 1.10rem;
+  display: inline-block;
+  background: url("../img/chevron.png") no-repeat;
+  background-size: contain; }

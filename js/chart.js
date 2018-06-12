@@ -119,8 +119,9 @@ function updateChart(updatedData) {
                                    .attr('stroke', 'none')
                                    .attr('r', circleRadius)
                                    .attr('transform', function(d) {
+                                      let bandwidth = x.bandwidth() < 0.5 ? x.bandwidth() : 0.5;
                                       return 'rotate(' + (
-                                        ((x(d.id) + x.bandwidth() / 2) * 180 - circleRadius) / Math.PI - 90
+                                        ((x(d.id) + bandwidth / 2) * 180) / Math.PI - 90
                                       ) + ') translate(' + (innerRadius - circleRadius * 2.5) + ', 0)';
                                    });
   circles.exit().remove();

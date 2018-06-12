@@ -10,7 +10,8 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     x, // x scale (companies)
     y, // y scale (carbon intensity)
     z, // z scale (categories)
-    yAxis;
+    yAxis,
+    lastMouseOver;
 
 
 function createChart(data) {
@@ -42,7 +43,7 @@ function createChart(data) {
 }
 
 function updateChart(updatedData) {
-  x.domain(updatedData.map(function(d) { return d.name; }));
+  x.domain(updatedData.map(function(d) { return d.id; }));
   y.domain([0, d3.max(updatedData, function(d) { return d.carbonInt; })]);
 
   var arcs = g.selectAll('.arc')
@@ -65,17 +66,19 @@ function updateChart(updatedData) {
             .attr('d', d3.arc()
               .innerRadius(function(d) { return y(d[0]); })
               .outerRadius(function(d) { return y(d[1]); })
-              .startAngle(function(d) { return x(d.data.name); })
+              .startAngle(function(d) { return x(d.data.id); })
                                                         // cap band width to ensure it doesn't look like a pie chart
-              .endAngle(function(d) { return x(d.data.name) + (x.bandwidth() < 0.5 ? x.bandwidth() : 0.5); })
+              .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.5 ? x.bandwidth() : 0.5); })
               .padAngle(0.01)
               .padRadius(innerRadius)
-            ).on('mouseover', showToolTip);
+            ).on('mouseover', showToolTip)
+             .on('mouseout', removeToolTip);
 
   drawYAxis(updatedData);
 }
 
 function showToolTip(d) {
+  lastMouseOver = d.data.id;
   // Update tooltip data
   d3.select('#tt-company').html(d.data.company);
   d3.select('#tt-name').html(d.data.name);
@@ -111,6 +114,17 @@ function showToolTip(d) {
     }
     return d3.event.pageY + 10 + 'px';
   });
+}
+
+function removeToolTip(d) {
+  // Confirm we moused out and not just to a new bar before hiding tooltip
+  setTimeout(() => {
+    if (d.data.id === lastMouseOver) {
+      tooltip.transition()
+          .duration(250)
+          .style('opacity', 0);
+    }
+  }, 100);
 }
 
 function drawYAxis(updatedData) {

@@ -24,6 +24,7 @@ function cleanAndParseData(sourceData) {
   let colIndexes = {
     company: cols.indexOf('Organisation'),
     name: cols.indexOf('Product name'),
+    id: cols.indexOf('CoClear-Product ID'),
     desc: cols.indexOf('Product detail'),
     footprint: cols.indexOf('Product CO2e footprint (kg CO2e)'),
     upstream: cols.indexOf('CoClear-Footprint %Upstream'),
@@ -49,6 +50,7 @@ function mapRow(colIndexes, row) {
   let obj = {
     company: row[colIndexes.company],
     name: row[colIndexes.name],
+    id: row[colIndexes.id],
     desc: row[colIndexes.desc],
     industry: row[colIndexes.industry],
     year: parseInt(row[colIndexes.year]),

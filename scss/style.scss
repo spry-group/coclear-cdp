@@ -1,9 +1,68 @@
 $light-grey: #CCCCCC;
 $mid-grey: #767676;
+$background-grey: #f6f7f9;
+$upstream: #fd8d00;
+$manufacturing: #755270;
+$downstream: #949fbd;
+$notAvailable: #686667;
+
+$max-width: 960px;
 
 #filters {
-  width: 960px;
+  width: $max-width;
   margin: 0 auto 50px auto;
+}
+
+#header {
+  font-size: 0.75em;
+  padding: 2em 1.8em;
+  margin-bottom: 1em;
+  background: $background-grey;
+
+  h1 {
+    width: $max-width;
+    font-size: 1.95em;
+    font-weight: 700;
+    margin-bottom: 0.5em
+  }
+
+  h4 {
+    font-size: 1.25em;
+  }
+
+  .key {
+    display: inline-block;
+    height: 0.5em;
+    width: 2.5em;
+    margin-right: 0.5em;
+    &.key-upstream {
+      background-color: $upstream;
+    }
+    &.key-manufacturing {
+      background-color: $manufacturing;
+    }
+    &.key-downstream {
+      background-color: $downstream;
+    }
+    &.key-notAvailable {
+      background-color: $notAvailable;
+    }
+  }
+}
+
+#footer {
+  width: $max-width;
+  text-align: left;
+  font-size: 0.75em;
+  padding: 0 1.8em 2em 1.8em;
+  font-weight: 600;
+
+  .logo {
+    background: url("../img/logo-coclear.jpg") no-repeat;
+    background-size: contain;
+    width: 7rem;
+    height: 3em;
+  }
 }
 
 #tooltip {

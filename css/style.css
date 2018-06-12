@@ -2,6 +2,44 @@
   width: 960px;
   margin: 0 auto 50px auto; }
 
+#header {
+  font-size: 0.75em;
+  padding: 2em 1.8em;
+  margin-bottom: 1em;
+  background: #f6f7f9; }
+  #header h1 {
+    width: 960px;
+    font-size: 1.95em;
+    font-weight: 700;
+    margin-bottom: 0.5em; }
+  #header h4 {
+    font-size: 1.25em; }
+  #header .key {
+    display: inline-block;
+    height: 0.5em;
+    width: 2.5em;
+    margin-right: 0.5em; }
+    #header .key.key-upstream {
+      background-color: #fd8d00; }
+    #header .key.key-manufacturing {
+      background-color: #755270; }
+    #header .key.key-downstream {
+      background-color: #949fbd; }
+    #header .key.key-notAvailable {
+      background-color: #686667; }
+
+#footer {
+  width: 960px;
+  text-align: left;
+  font-size: 0.75em;
+  padding: 0 1.8em 2em 1.8em;
+  font-weight: 600; }
+  #footer .logo {
+    background: url("../img/logo-coclear.jpg") no-repeat;
+    background-size: contain;
+    width: 7rem;
+    height: 3em; }
+
 #tooltip {
   pointer-events: none;
   cursor: pointer;

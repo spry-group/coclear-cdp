@@ -13,6 +13,7 @@ function init(error, sourceData) {
     return alert('Something went wrong, please try again later.');
   }
   cleanAndParseData(sourceData);
+  updateHeader();
   createChart(data);
   createFilters(data, sortCompany, sortIntensity);
 }
@@ -71,6 +72,10 @@ function mapRow(colIndexes, row) {
   obj['stage data not available'] = (obj['upstream'] + obj['manufacturing'] + obj['downstream']) === 0 ?
                                       obj.carbonInt : 0;
   return obj;
+}
+
+function updateHeader() {
+  document.getElementById('productCount').innerHTML = data.length;
 }
 
 function sortCompany(a, b) {

@@ -101,6 +101,7 @@ function updateChart(updatedData) {
   // Delta circles
   let circleRadius = innerRadius / updatedData.length * 0.75;
       circleRadius = circleRadius < 1.7 ? 1.7 : circleRadius;
+      circleRadius = circleRadius > 30  ? 30  : circleRadius;
 
   let emissionDeltas = g.select('.deltaCircles')
                         .selectAll('.emissionDelta')

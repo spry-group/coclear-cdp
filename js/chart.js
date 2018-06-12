@@ -11,6 +11,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     y, // y scale (carbon intensity)
     z, // z scale (categories)
     yAxis,
+    chartTitle,
     lastMouseOver;
 
 
@@ -38,9 +39,27 @@ function createChart(data) {
             .domain(categories);
 
   yAxis = g.append('g').attr('text-anchor', 'middle');
-  yAxis.append('text')
-      .attr('dy', '-' + (height / 2 - 7) + 'px')
-      .text('Carbon Intensity');
+
+  chartTitle = g.append('g')
+                .attr('class', 'title');
+
+  chartTitle.append('text')
+              .text('Carbon Intensity')
+              .attr('dy', '-' + (width / 2 - 10) + 'px')
+              .attr('dx', '-64px')
+              .attr('font-size', '1.5em')
+              .attr('font-weight', '700')
+              .attr('fill', 'none')
+              .attr('stroke', '#fff')
+              .attr('stroke-width', 10);
+
+  chartTitle.append('text')
+      .text('Carbon Intensity')
+      .attr('dy', '-' + (width / 2 - 10) + 'px')
+      .attr('dx', '-64px')
+      .attr('font-size', '1.5em')
+      .attr('font-weight', '700');
+
   updateChart(data);
 }
 
@@ -178,16 +197,20 @@ function drawYAxis(updatedData) {
               .attr('stroke', '#000')
               .attr('r', y)
 
+  // Mask background
   yTickEnter.append('text')
               .attr('y', function(d) { return -y(d); })
               .attr('dy', '0.35em')
               .attr('fill', 'none')
               .attr('stroke', '#fff')
-              .attr('stroke-width', 5)
+              .attr('stroke-width', 4)
               .text(y.tickFormat(5, '.1f'))
 
   yTickEnter.append('text')
               .attr('y', function(d) { return -y(d); })
               .attr('dy', '0.35em')
               .text(y.tickFormat(5, '.1f'));
+
+  // Move chart title back on top
+  chartTitle.node().parentNode.append(chartTitle.node());
 }

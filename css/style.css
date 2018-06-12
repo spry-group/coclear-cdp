@@ -1,10 +1,10 @@
 #header {
+  width: 960px;
+  margin: 0 auto 1em auto;
   font-size: 0.75em;
   padding: 2em 1.8em;
-  margin-bottom: 1em;
   background: #f6f7f9; }
   #header h1 {
-    width: 960px;
     font-size: 1.95em;
     font-weight: 700;
     margin-bottom: 0.5em; }
@@ -30,6 +30,7 @@
 
 #footer {
   width: 960px;
+  margin: 0 auto;
   text-align: left;
   font-size: 0.75em;
   padding: 0 1.8em 2em 1.8em;

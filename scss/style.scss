@@ -10,13 +10,13 @@ $decrease: #097625;
 $max-width: 960px;
 
 #header {
+  width: $max-width;
+  margin: 0 auto 1em auto;
   font-size: 0.75em;
   padding: 2em 1.8em;
-  margin-bottom: 1em;
   background: $background-grey;
 
   h1 {
-    width: $max-width;
     font-size: 1.95em;
     font-weight: 700;
     margin-bottom: 0.5em
@@ -53,6 +53,7 @@ $max-width: 960px;
 
 #footer {
   width: $max-width;
+  margin: 0 auto;
   text-align: left;
   font-size: 0.75em;
   padding: 0 1.8em 2em 1.8em;

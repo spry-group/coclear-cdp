@@ -88,9 +88,9 @@ function showToolTip(d) {
   d3.select('#tt-footprintChangeReason').html(d.data.footprintChangeReason);
 
   d3.select('#tt-carbonInt').html(d.data.carbonInt);
-  d3.select('#tt-upstreamPer').html(d.data.upstreamPer);
-  d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer);
-  d3.select('#tt-downstreamPer').html(d.data.downstreamPer);
+  d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Unknown');
+  d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Unknown');
+  d3.select('#tt-downstreamPer').html(d.data.downstreamPer || 'Unknown');
 
   d3.select('#tt-weight').html(d.data.weight);
   d3.select('#tt-weightSource').html(d.data.weightSource);

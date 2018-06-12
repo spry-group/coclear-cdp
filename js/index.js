@@ -51,7 +51,7 @@ function mapRow(colIndexes, row) {
   let obj = {
     company: row[colIndexes.company],
     name: row[colIndexes.name],
-    id: row[colIndexes.id],
+    id: row[colIndexes.id] + row[colIndexes.year],
     desc: row[colIndexes.desc],
     industry: row[colIndexes.industry],
     year: parseInt(row[colIndexes.year]),

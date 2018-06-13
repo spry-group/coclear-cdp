@@ -47,7 +47,7 @@ $max-width: 960px;
 }
 
 #filters {
-  width: $max-width;
+  width: $max-width - 20;
   margin: 0 auto 50px auto;
 }
 
@@ -59,7 +59,7 @@ $max-width: 960px;
 
 #footer {
   width: $max-width;
-  margin: 0 auto;
+  margin: 1em auto 0 auto;
   text-align: left;
   font-size: 0.75em;
   padding: 0 1.8em 2em 1.8em;

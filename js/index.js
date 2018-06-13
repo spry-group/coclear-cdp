@@ -79,9 +79,9 @@ function updateHeader() {
 }
 
 function sortCompany(a, b) {
-  a = a.company.toUpperCase();
-  b = b.company.toUpperCase();
-  return a < b ? -1 : a > b ? 1 : 0;
+  let aName = a.company.toUpperCase();
+  let bName = b.company.toUpperCase();
+  return aName < bName ? -1 : aName > bName ? 1 : sortIntensity(a, b);
 }
 
 function sortIntensity(a, b) {

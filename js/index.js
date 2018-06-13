@@ -76,6 +76,10 @@ function mapRow(colIndexes, row) {
 
 function updateHeader() {
   document.getElementById('productCount').innerHTML = data.length;
+  let yearRange = d3.extent(data, (d) => d.year);
+      yearRange = JSON.stringify(yearRange[0]) + '-' + JSON.stringify(yearRange[1]).substring(2);
+  document.querySelector('#header .yearRange').innerHTML = yearRange;
+  document.querySelector('#footer .yearRange').innerHTML = yearRange;
 }
 
 function sortCompany(a, b) {

@@ -134,6 +134,8 @@ function showToolTip(d) {
   lastMouseOver = d.data.id;
   // Update tooltip data
   d3.select('#tt-company').html(d.data.company);
+  d3.select('#tt-sector').html(d.data.sector);
+  d3.select('#tt-year').html(d.data.year);
   d3.select('#tt-name').html(d.data.name);
   d3.select('#tt-desc').html(d.data.desc);
 
@@ -154,7 +156,6 @@ function showToolTip(d) {
   d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Unknown');
   d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Unknown');
   d3.select('#tt-downstreamPer').html(d.data.downstreamPer || 'Unknown');
-  d3.select('#tt-year').html(d.data.year);
 
   d3.select('#tt-weightSource').html(d.data.weightSource);
   d3.select('#tt-protocol').html(d.data.protocol);

@@ -15,7 +15,7 @@ function init(error, sourceData) {
   cleanAndParseData(sourceData);
   updateHeader();
   createChart(data);
-  createFilters(data, sortCompany, sortIntensity);
+  createFilters(data);
 }
 
 function cleanAndParseData(sourceData) {
@@ -93,4 +93,8 @@ function sortCompany(a, b) {
 
 function sortIntensity(a, b) {
   return a.carbonInt > b.carbonInt ? 1 : a.carbonInt < b.carbonInt ? -1 : 0;
+}
+
+function sortSector(a, b) {
+  return a.sector > b.sector ? 1 : a.sector < b.sector ? -1 : sortIntensity(a, b);
 }

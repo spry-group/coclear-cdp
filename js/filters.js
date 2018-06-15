@@ -4,7 +4,7 @@ var filters = {
   year: 2015,
   company: 'all'
 }
-function createFilters(data, sortCompany, sortIntensity) {
+function createFilters(data) {
   const sortSelect = d3.select('#select-sort');
   const sectorSelect = d3.select('#select-sector');
   const yearSelect = d3.select('#select-year');
@@ -59,7 +59,7 @@ function updateData() {
       newData = newData.filter(d => d[key] === filters[key]);
     }
   });
-  newData.sort(filters.sort === 'company' ? sortCompany : sortIntensity);
+  newData.sort(filters.sort === 'company' ? sortCompany : filters.sort === 'intensity' ? sortIntensity : sortSector);
   updateChart(newData);
 }
 

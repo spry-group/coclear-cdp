@@ -1,0 +1,117 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans|Roboto" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js" integrity="sha256-hYXbQJK4qdJiAeDVjjQ9G0D6A0xLnDQ4eJI9dkm7Fpk=" crossorigin="anonymous"></script>
+  <script src="js/scale-radial.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/index.js"></script>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="header">
+    <h1>Product Carbon Intensity & Life Cycle Emissions of <span id="productCount"></span> Products</h1>
+    <h4>CDP Data <span class="yearRange"></span></h4>
+    <div class="row">
+      <div class="col">
+        Over 275 Companies from 79 countries representing 42 global industry category sectors (GICS) participated in the product disclosure question 2016 and 2017.
+        These companies provided life cycle emissions data on over 506 products. The data collected from the questionnaire provides an opportunity for CoClear
+        to make available deeper insight into sector and product-level emissions. By following carbon intensity trends in each sector the CoClear analysis opens a
+        door into efficiency opportunities that can be shared within each sector.
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col pr-0">
+            <strong>Life Cycle C02e Emissions</strong>
+            <div><span class="key key-upstream"></span> Upstream</div>
+            <div><span class="key key-manufacturing"></span> Manufacturing</div>
+            <div><span class="key key-downstream"></span> Downstream</div>
+            <div><span class="key key-notAvailable"></span> Stage data not available</div>
+          </div>
+          <div class="col pr-0">
+            <strong>Reported Product Emission Change</strong>
+            <div><span class="deltaCircle decrease"></span>Decrease in product emissions</div>
+            <div><span class="deltaCircle increase"></span>Increase in product emissions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center container-fluid p-0">
+    <form id="filters">
+        <div class="form-row">
+          <div class="col-4">
+            <div class="select-wrapper">
+              <select id="select-sort" class="form-control ">
+                <option value="intensity">Order by Carbon Intensity</option>
+                <option value="company">Order by Company Name</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="select-wrapper">
+              <select id="select-industry" class="form-control">
+                <option value="all">View All Industries</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="select-wrapper">
+              <select id="select-year" class="form-control">
+                <option value="all">View All Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="select-wrapper">
+              <select id="select-company" class="form-control">
+                <option value="all">View All Companies</option>
+              </select>
+            </div>
+          </div>
+        </div>
+    </form>
+    <svg id="chart" width="960" height="960" font-family="sans-serif" font-size="10"></svg>
+  </div>
+  <div id="footer" class="mb-3">
+    <div class="logo mb-3"></div>
+    <div class="row">
+      <div class="col">CDP has partnered with CoClear to analyze the <span class="yearRange"></span> product life cycle data that was submitted as part of CDP’s Supply Chain Climate
+        Change Information request. CoClear is a consultancy specializing in fast life cycle analysis and greenhouse gas efficiency opportunities across all
+        stages of a production cycle. CoClear have applied rigorous analytical expertise to the collection of product data to look for emerging global life cycle
+        trends in this unique data set.</div>
+      <div class="col">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae diam efficitur, tristique nulla eu, efficitur justo. Mauris convallis
+        rutrum pulvinar. Fusce tempor purus tellus, eu ornare nunc efficitur ut. Nullam consectetur auctor nibh. Pellentesque luctus feugiat urna, vitae varius nisi
+        tincidunt vitae. Sed porta odio a mauris mattis elementum at vitae odio. Vestibulum tristique varius blandit. Donec maximus mattis euismod. </div>
+    </div>
+  </div>
+  <div id="tooltip" width="460" style="opacity: 0">
+    <div class="row mb-3">
+      <div class="col-6">
+        <h4 id="tt-company" class="font-weight-bold"></h4>
+        <h4 id="tt-name" class="font-weight-bold mb-1"></h4>
+        <div id="tt-desc"></div>
+      </div>
+      <div class="col-6">
+        <h5 class="font-weight-bold mb-1">GHG Footprint change</h5>
+        <div id="tt-footprintChange"></div>
+      </div>
+    </div>
+    <div class="row lists">
+      <div class="col-6">
+        <div><span class="font-weight-bold">Product Footprint (kg CO2e): </span> <span id="tt-footprint"></span></div>
+        <div><span class="font-weight-bold">Carbon Intensity*: </span> <span id="tt-carbonInt"></span></div>
+        <div><span class="font-weight-bold">Upstream emissions: </span> <span id="tt-upstreamPer"></span></div>
+        <div><span class="font-weight-bold">Manufacturing emissions: </span> <span id="tt-manufacturingPer"></span></div>
+        <div><span class="font-weight-bold">Downstream emissions: </span> <span id="tt-downstreamPer"></span></div>
+      </div>
+      <div class="col-6">
+        <div><span class="font-weight-bold">Product FU Weight (kg): </span> <span id="tt-weight"></span></div>
+        <div><span class="font-weight-bold">CoClear Product Weight Source: </span> <span id="tt-weightSource"></span></div>
+        <div><span class="font-weight-bold">CoClear Protocol Mapping: </span> <span id="tt-protocol"></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

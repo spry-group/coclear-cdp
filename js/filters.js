@@ -1,20 +1,20 @@
 var filters = {
   sort: 'intensity',
-  industry: 'all',
+  sector: 'all',
   year: 2015,
   company: 'all'
 }
 function createFilters(data, sortCompany, sortIntensity) {
   const sortSelect = d3.select('#select-sort');
-  const industrySelect = d3.select('#select-industry');
+  const sectorSelect = d3.select('#select-sector');
   const yearSelect = d3.select('#select-year');
   const companySelect = d3.select('#select-company');
 
-  populateSelect(industrySelect, getUniqueValues(data, 'industry'), ' Industry');
+  populateSelect(sectorSelect, getUniqueValues(data, 'sector'));
   populateSelect(yearSelect, getUniqueValues(data, 'year'));
   populateSelect(companySelect, getUniqueValues(data, 'company'));
   bindSelect(sortSelect, 'sort');
-  bindSelect(industrySelect, 'industry');
+  bindSelect(sectorSelect, 'sector');
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
   setSelectDefault('year', Math.max(...getUniqueValues(data, 'year')));
@@ -28,15 +28,14 @@ function getUniqueValues(data, key) {
  }).sort();
 }
 
-function populateSelect(select, data, append) {
-  append = append || '';
+function populateSelect(select, data) {
   var options = select.selectAll('option')
                       // Need the custom id mapping so we don't override the defaults
                       .data(data, function(d) { return d; });
   options.enter()
          .append('option')
             .attr('value', (d) => d)
-            .text((d) => d + append);
+            .text((d) => d);
 
   options.exit()
          .filter(function(d, i) { return d; }) // Filter by key instead of index
@@ -55,7 +54,7 @@ function bindSelect(ele, key) {
 
 function updateData() {
   let newData = [...data];
-  ['industry', 'year', 'company'].forEach(key => {
+  ['sector', 'year', 'company'].forEach(key => {
     if (filters[key] !== 'all') {
       newData = newData.filter(d => d[key] === filters[key]);
     }
@@ -71,20 +70,25 @@ function setSelectDefault(key, value) {
 }
 
 function avoidConflicts(ele, key) {
-  // If we set industry then reset company, and visa versa
-  if (ele.node().val !== 'all' && (key === 'industry' || key === 'company')) {
-    let conflict = key === 'industry' ? 'company' : 'industry';
+  // // Ignore if we're choosing a single company after filtering down to a sector
+  if (key === 'company' && filters.sector !== 'all' && ele.node().value !== 'all') {
+    return;
+  }
+
+  // If we set sector then reset company, and visa versa
+  if (key === 'sector' || key === 'company') {
+    let conflict = key === 'sector' ? 'company' : 'sector';
     filters[conflict] = 'all';
     document.getElementById('select-' + conflict).value = 'all';
   }
 }
 
 function filterRemainingOptions (ele, key, val) {
-  if (key === 'industry' && val !== 'all') {
-    // Only show companies in that industry in the companies select
-    populateSelect(d3.select('#select-company'), getUniqueValues(data.filter(d => d.industry === val), 'company'));
-  } else if ((key === 'company' || key === 'industry') && val === 'all')  {
-    // Add back in all companies when selecting all companies or all industries
+  if (key === 'sector' && val !== 'all') {
+    // Only show companies in that sector in the companies select
+    populateSelect(d3.select('#select-company'), getUniqueValues(data.filter(d => d.sector === val), 'company'));
+  } else if ((key === 'company' || key === 'sector') && val === 'all')  {
+    // Add back in all companies when selecting all companies or all sectors
     populateSelect(d3.select('#select-company'), getUniqueValues(data, 'company'));
   }
 }

@@ -1,7 +1,7 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
 var companies;
-var industries;
+var sectors;
 var years;
 
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -33,7 +33,7 @@ function cleanAndParseData(sourceData) {
     downstream: cols.indexOf('CoClear-Footprint %Downstream'),
     transportation: cols.indexOf('CoClear-Footprint %Transportion'),
     endOfLife: cols.indexOf('CoClear-Footprint %EndOfLife'),
-    industry: cols.indexOf('CoClear-Sector Mapping'),
+    sector: cols.indexOf('CoClear-Sector Mapping'),
     year: cols.indexOf('Year of reporting'),
     carbonInt: cols.indexOf('CoClear-Product Carbon Intensity'),
     weight: cols.indexOf('Product FU Weight (kg)'),
@@ -53,7 +53,7 @@ function mapRow(colIndexes, row) {
     name: row[colIndexes.name],
     id: row[colIndexes.id] + row[colIndexes.year],
     desc: row[colIndexes.desc],
-    industry: row[colIndexes.industry],
+    sector: row[colIndexes.sector],
     year: parseInt(row[colIndexes.year]),
     footprint: parseFloat(row[colIndexes.footprint]),
     upstreamPer: row[colIndexes.upstream],

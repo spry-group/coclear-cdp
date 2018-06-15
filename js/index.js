@@ -38,6 +38,7 @@ function cleanAndParseData(sourceData) {
     carbonInt: cols.indexOf('CoClear-Product Carbon Intensity'),
     weight: cols.indexOf('Product FU Weight (kg)'),
     weightSource: cols.indexOf('CoClear Product Weight Source'),
+    dataCorrections: cols.indexOf('CoClear DataCorrections Comment'),
     protocol: cols.indexOf('CoClear Protocol Mapping'),
     footprintChangePer: cols.indexOf('Footprint %Change'),
     footprintChangeReason: cols.indexOf('Reason for change'),
@@ -51,6 +52,7 @@ function mapRow(colIndexes, row) {
   let obj = {
     company: row[colIndexes.company],
     name: row[colIndexes.name],
+    coclearId: row[colIndexes.id],
     id: row[colIndexes.id] + row[colIndexes.year],
     desc: row[colIndexes.desc],
     sector: row[colIndexes.sector],
@@ -62,6 +64,7 @@ function mapRow(colIndexes, row) {
     carbonInt: parseFloat(row[colIndexes.carbonInt]),
     weight: row[colIndexes.weight],
     weightSource: row[colIndexes.weightSource],
+    dataCorrections: row[colIndexes.dataCorrections],
     protocol: row[colIndexes.protocol],
     footprintChangePer: parseFloat(row[colIndexes.footprintChangePer]),
     footprintChangeReason: row[colIndexes.footprintChangeReason],

@@ -144,18 +144,21 @@ function showToolTip(d) {
   } else {
     d3.select('#tt-footprintChange').html('No change / no data');
   }
-
   d3.select('#tt-footprintChangeReason').html(d.data.footprintChangeReason);
 
+  d3.select('#tt-footprint').html(d.data.footprint);
   d3.select('#tt-carbonInt').html(d.data.carbonInt);
+  d3.select('#tt-weight').html(d.data.weight);
+  d3.select('#tt-coclearId').html(d.data.weight);
+
   d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Unknown');
   d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Unknown');
   d3.select('#tt-downstreamPer').html(d.data.downstreamPer || 'Unknown');
+  d3.select('#tt-year').html(d.data.year);
 
-  d3.select('#tt-weight').html(d.data.weight);
   d3.select('#tt-weightSource').html(d.data.weightSource);
-  d3.select('#tt-footprint').html(d.data.footprint);
   d3.select('#tt-protocol').html(d.data.protocol);
+  d3.select('#tt-dataCorrections').html(d.data.dataCorrections === 'n/a' ? 'None' : d.data.dataCorrections);
 
   // Show tooltip
   tooltip.transition()

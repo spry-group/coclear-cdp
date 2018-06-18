@@ -18,6 +18,7 @@ function createFilters(data) {
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
   setSelectDefault('year', Math.max(...getUniqueValues(data, 'year')));
+  updateData();
 }
 
 // Takes an array of objects and a key to map to.
@@ -47,8 +48,9 @@ function bindSelect(ele, key) {
     let val = ele.node().value;
     filters[key] = key !== 'year' || val === 'all' ? val : parseInt(val);
     avoidConflicts(ele, key);
-    filterRemainingOptions(ele, key, val);
+    filterRemainingOptions(key, val);
     updateData();
+    updateQueryParam(key, val);
   });
 }
 
@@ -66,7 +68,6 @@ function updateData() {
 function setSelectDefault(key, value) {
   document.getElementById('select-' + key).value = value;
   filters[key] = value;
-  updateData();
 }
 
 function avoidConflicts(ele, key) {
@@ -80,10 +81,11 @@ function avoidConflicts(ele, key) {
     let conflict = key === 'sector' ? 'company' : 'sector';
     filters[conflict] = 'all';
     document.getElementById('select-' + conflict).value = 'all';
+    updateQueryParam(conflict, 'all');
   }
 }
 
-function filterRemainingOptions (ele, key, val) {
+function filterRemainingOptions(key, val) {
   if (key === 'sector' && val !== 'all') {
     // Only show companies in that sector in the companies select
     populateSelect(d3.select('#select-company'), getUniqueValues(data.filter(d => d.sector === val), 'company'));
@@ -91,4 +93,38 @@ function filterRemainingOptions (ele, key, val) {
     // Add back in all companies when selecting all companies or all sectors
     populateSelect(d3.select('#select-company'), getUniqueValues(data, 'company'));
   }
+}
+
+function loadFilters() {
+  let queryDict = mapQueryParamsToDict();
+  Object.keys(queryDict).forEach(queryKey => {
+    if (queryKey in filters) {
+      let val = decodeURIComponent(queryDict[queryKey]);
+      if (queryKey === 'year') {
+        val = parseFloat(val);
+      }
+      setSelectDefault(queryKey, val);
+      filters[queryKey] = val;
+    }
+  });
+  updateData();
+}
+
+// Adds or modifies query string params
+function updateQueryParam(key, val) {
+  let queryDict = mapQueryParamsToDict();
+  queryDict[key] = encodeURIComponent(val);
+  let queryString = Object.keys(queryDict).map(queryKey => queryKey + '=' + queryDict[queryKey]).join('&');
+  history.pushState(null, '', location.href.split('?')[0] + '?' + queryString);
+}
+
+// Take all query params in the url and return them as a dictionary
+function mapQueryParamsToDict() {
+  let queryDict = {};
+  let matches = location.search.match(/(\w+)=([\w,%]+)/g);
+  if (matches) {
+    matches.forEach(match => queryDict[match.split('=')[0]] = match.split('=')[1]);
+  }
+
+  return queryDict;
 }

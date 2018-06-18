@@ -16,6 +16,7 @@ function init(error, sourceData) {
   updateHeader();
   createChart(data);
   createFilters(data);
+  loadFilters();
 }
 
 function cleanAndParseData(sourceData) {

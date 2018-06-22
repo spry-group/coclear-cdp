@@ -92,7 +92,7 @@ function updateChart(updatedData) {
               .outerRadius(function(d) { return y(d[1]); })
               .startAngle(function(d) { return x(d.data.id); })
                                                         // cap band width to ensure it doesn't look like a pie chart
-              .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.5 ? x.bandwidth() : 0.5); })
+              .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.21 ? x.bandwidth() : 0.21); })
               .padAngle(0.01)
               .padRadius(innerRadius)
             ).on('mouseover', showToolTip)

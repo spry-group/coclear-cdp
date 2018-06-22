@@ -1,11 +1,12 @@
 // Modified from https://bl.ocks.org/mbostock/6fead6d1378d6df5ae77bb6a719afcb2
 var data = [];
+var copy; // Written copy from the spreadsheet
 var companies;
 var sectors;
 var years;
 
 document.addEventListener('DOMContentLoaded', function(e) {
-  d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:Z?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
+  d3.json('https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:AZ?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw', init);
 });
 
 function init(error, sourceData) {
@@ -13,7 +14,7 @@ function init(error, sourceData) {
     return alert('Something went wrong, please try again later.');
   }
   cleanAndParseData(sourceData);
-  updateHeader();
+  updateCopy();
   createChart(data);
   createFilters(data);
   loadFilters();
@@ -43,6 +44,14 @@ function cleanAndParseData(sourceData) {
     protocol: cols.indexOf('CoClear Protocol Mapping'),
     footprintChangePer: cols.indexOf('Footprint %Change'),
     footprintChangeReason: cols.indexOf('Reason for change'),
+  }
+
+  copy = {
+    title: sourceData[0][cols.indexOf('Title Text')],
+    header: sourceData[0][cols.indexOf('Header Text')],
+    footer1: sourceData[0][cols.indexOf('Footer Text1')],
+    footer2: sourceData[0][cols.indexOf('Footer Text2')],
+    footerImg: sourceData[0][cols.indexOf('Footer Img URL')],
   }
 
   data.push(...sourceData.map((row) => mapRow(colIndexes, row)));
@@ -78,12 +87,16 @@ function mapRow(colIndexes, row) {
   return obj;
 }
 
-function updateHeader() {
-  document.getElementById('productCount').innerHTML = data.length;
+function updateCopy() {
+  document.querySelector('#title-text').innerHTML = copy.title;
+  document.querySelector('#header-text').innerHTML = copy.header;
+  document.querySelector('#footer-text1').innerHTML = copy.footer1;
+  document.querySelector('#footer-text2').innerHTML = copy.footer2;
+
   let yearRange = d3.extent(data, (d) => d.year);
       yearRange = JSON.stringify(yearRange[0]) + '-' + JSON.stringify(yearRange[1]).substring(2);
+
   document.querySelector('#header .yearRange').innerHTML = yearRange;
-  document.querySelector('#footer .yearRange').innerHTML = yearRange;
 }
 
 function sortCompany(a, b) {

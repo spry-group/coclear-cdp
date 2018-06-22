@@ -35,7 +35,7 @@ function createChart(data) {
             .range([innerRadius, outerRadius])
 
   z = d3.scaleOrdinal()
-            .range(['#686667', '#949fbd', '#755270', '#fd8d00'])
+            .range(['#686667', '#00bff5', '#b8bfc9', '#ff8b00'])
             .domain(categories);
 
   yAxis = g.append('g')

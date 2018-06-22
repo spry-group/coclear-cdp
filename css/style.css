@@ -20,11 +20,11 @@
     width: 2.5em;
     margin-right: 0.5em; }
     #header .key.key-upstream {
-      background-color: #fd8d00; }
+      background-color: #ff8b00; }
     #header .key.key-manufacturing {
-      background-color: #755270; }
+      background-color: #b8bfc9; }
     #header .key.key-downstream {
-      background-color: #949fbd; }
+      background-color: #00bff5; }
     #header .key.key-notAvailable {
       background-color: #686667; }
   #header .lists {

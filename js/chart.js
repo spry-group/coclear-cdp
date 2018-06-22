@@ -6,6 +6,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     outerRadius,
     tooltip,
     ttWidth,
+    ttOffset,
     g, // Svg group
     x, // x scale (companies)
     y, // y scale (carbon intensity)
@@ -22,6 +23,7 @@ function createChart(data) {
   outerRadius = Math.min(width, height) / 2 - 25;
   tooltip = d3.select('#tooltip');
   ttWidth = + tooltip.attr('width');
+  ttOffset = document.getElementById('chart').getBoundingClientRect().x + ((width-ttWidth) / 2);
 
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
   g.append('g')
@@ -164,13 +166,10 @@ function showToolTip(d) {
   // Show tooltip
   tooltip.transition()
           .duration(250)
-          .style('opacity', .9);
+          .style('opacity', .95);
   // Dynamically set tooltip position for best fit
   tooltip.style('left', function() {
-    if (d3.event.offsetX > width / 2) {
-      return d3.event.pageX - ttWidth - 10 + 'px';
-    }
-    return d3.event.pageX + 10 + 'px';
+    return ttOffset + 'px';
   })
   .style('top', function() {
     if (d3.event.offsetY > height / 2) {

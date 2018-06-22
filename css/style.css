@@ -1,4 +1,13 @@
 @import url(bootstrap.min.css);
+.color-upstream {
+  color: #ff8b00; }
+
+.color-manufacturing {
+  color: #b8bfc9; }
+
+.color-downstream {
+  color: #00bff5; }
+
 .d-flex.row {
   margin: 0; }
 
@@ -63,6 +72,9 @@
     background-size: contain;
     width: 7rem;
     height: 3em; }
+  #footer #footer-img {
+    max-height: 10em;
+    width: auto; }
 
 #header, #footer {
   padding: 3em 4em 1em 4em; }
@@ -81,22 +93,31 @@
   pointer-events: none;
   cursor: pointer;
   position: absolute;
-  width: 470px;
-  padding: 15px 15px 8px 15px;
+  width: 850px;
+  padding: 15px 10px 8px 10px;
   font: 12px sans-serif;
-  background: #fff;
+  background: #f6f7f9;
   border: 1px #999 solid; }
+  #tooltip h3 {
+    font-size: 1.5em;
+    margin: 0; }
   #tooltip h4 {
-    font-size: 1.25em;
+    font-size: 1.1em;
     margin: 0; }
   #tooltip h5 {
     font-size: 1.125em;
     margin: 0; }
-  #tooltip .lists {
-    line-height: 1.75em; }
-  #tooltip .col-emissions {
-    font-size: 0.9em; }
-  #tooltip .row-finePrint {
+  #tooltip .row-eq-height img {
+    vertical-align: text-bottom;
+    height: 1.25em;
+    margin-right: 0.25em; }
+  #tooltip .stats {
+    padding: 0.75em 1.25em;
+    background-color: #fff;
+    border: 3px #f6f7f9 solid; }
+    #tooltip .stats > div {
+      padding: 0.5em 0; }
+  #tooltip .finePrint {
     font-size: 0.6em; }
 
 .deltaCircle {

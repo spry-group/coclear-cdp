@@ -10,15 +10,17 @@ $increase: #f32033;
 $decrease: #097625;
 $max-width: 960px;
 
-// Add xxl breakpoint
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1700px
-);
+.color-upstream {
+  color: $upstream;
+}
+
+.color-manufacturing {
+  color: $manufacturing;
+}
+
+.color-downstream {
+  color: $downstream;
+}
 
 .d-flex.row {
   margin: 0;
@@ -107,6 +109,11 @@ $grid-breakpoints: (
     width: 7rem;
     height: 3em;
   }
+
+  #footer-img {
+    max-height: 10em;
+    width: auto;
+  }
 }
 
 #header, #footer {
@@ -129,14 +136,19 @@ $grid-breakpoints: (
   pointer-events: none;
   cursor: pointer;
   position: absolute;
-  width: 470px; // Half svg width - 10px for padding
-  padding: 15px 15px 8px 15px;
+  width: 850px;
+  padding: 15px 10px 8px 10px;
   font: 12px sans-serif;
-  background: #fff;
+  background: $background-grey;
   border: 1px #999 solid;
 
+  h3 {
+    font-size: 1.5em;
+    margin: 0;
+  }
+
   h4 {
-    font-size: 1.25em;
+    font-size: 1.1em;
     margin: 0;
   }
 
@@ -145,15 +157,24 @@ $grid-breakpoints: (
     margin: 0;
   }
 
-  .lists {
-    line-height: 1.75em;
+  .row-eq-height img {
+    vertical-align: text-bottom;
+    height: 1.25em;
+    margin-right: 0.25em;
   }
 
-  .col-emissions {
-    font-size: 0.9em;
+  .stats {
+    padding: 0.75em 1.25em;
+    background-color: #fff;
+    border: 3px $background-grey solid;
+    > div {
+      padding: 0.5em 0;
+    }
   }
 
-  .row-finePrint {
+
+
+  .finePrint {
     font-size: 0.6em;
   }
 }

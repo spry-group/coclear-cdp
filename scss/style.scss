@@ -1,3 +1,4 @@
+@import "bootstrap.min.css";
 $light-grey: #CCCCCC;
 $mid-grey: #767676;
 $background-grey: #f6f7f9;
@@ -9,9 +10,23 @@ $increase: #f32033;
 $decrease: #097625;
 $max-width: 960px;
 
+// Add xxl breakpoint
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1700px
+);
+
+.d-flex.row {
+  margin: 0;
+}
+
 #header {
   width: $max-width;
-  margin: 0 auto 1em auto;
+  margin: 0 auto;
   font-size: 0.75em;
   padding: 2em 1.8em;
   background: $background-grey;
@@ -44,14 +59,35 @@ $max-width: 960px;
       background-color: $notAvailable;
     }
   }
+
+  .lists {
+    line-height: 2;
+  }
+}
+
+.filterContainer {
+  background: $background-grey;
+  padding: 1em 0 1.5em 0;
+
+  @media (min-width : 1600px) {
+    margin-bottom: 0;
+  }
 }
 
 #filters {
-  width: $max-width - 20;
-  margin: 0 auto 50px auto;
+  width: $max-width;
+  padding: 0 3em;
+  margin: 0 auto;
+
+  @media (min-width : 1600px) {
+    padding: 1em 0;
+    width: 1200px;
+  }
 }
 
 #chart {
+  margin: 2em auto 0 auto;
+
   .yAxis {
     pointer-events: none;
   }
@@ -70,6 +106,22 @@ $max-width: 960px;
     background-size: contain;
     width: 7rem;
     height: 3em;
+  }
+}
+
+#header, #footer {
+  padding: 3em 4em 1em 4em;
+
+  @media (min-width : 1600px) {
+    background: $background-grey;
+    max-height: 1200px;
+    padding: 0;
+    margin: 0;
+    > .row {
+      margin: 0 auto;
+      align-content: center;
+      width: auto;
+    }
   }
 }
 
@@ -173,4 +225,3 @@ select.form-control {
   background: url("../img/chevron.png") no-repeat;
   background-size: contain;
 }
-

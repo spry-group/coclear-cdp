@@ -1,6 +1,10 @@
+@import url(bootstrap.min.css);
+.d-flex.row {
+  margin: 0; }
+
 #header {
   width: 960px;
-  margin: 0 auto 1em auto;
+  margin: 0 auto;
   font-size: 0.75em;
   padding: 2em 1.8em;
   background: #f6f7f9; }
@@ -23,13 +27,29 @@
       background-color: #949fbd; }
     #header .key.key-notAvailable {
       background-color: #686667; }
+  #header .lists {
+    line-height: 2; }
+
+.filterContainer {
+  background: #f6f7f9;
+  padding: 1em 0 1.5em 0; }
+  @media (min-width: 1600px) {
+    .filterContainer {
+      margin-bottom: 0; } }
 
 #filters {
-  width: 940px;
-  margin: 0 auto 50px auto; }
+  width: 960px;
+  padding: 0 3em;
+  margin: 0 auto; }
+  @media (min-width: 1600px) {
+    #filters {
+      padding: 1em 0;
+      width: 1200px; } }
 
-#chart .yAxis {
-  pointer-events: none; }
+#chart {
+  margin: 2em auto 0 auto; }
+  #chart .yAxis {
+    pointer-events: none; }
 
 #footer {
   width: 960px;
@@ -43,6 +63,19 @@
     background-size: contain;
     width: 7rem;
     height: 3em; }
+
+#header, #footer {
+  padding: 3em 4em 1em 4em; }
+  @media (min-width: 1600px) {
+    #header, #footer {
+      background: #f6f7f9;
+      max-height: 1200px;
+      padding: 0;
+      margin: 0; }
+      #header > .row, #footer > .row {
+        margin: 0 auto;
+        align-content: center;
+        width: auto; } }
 
 #tooltip {
   pointer-events: none;

@@ -100,7 +100,7 @@ function loadFilters() {
   Object.keys(queryDict).forEach(queryKey => {
     if (queryKey in filters) {
       let val = decodeURIComponent(queryDict[queryKey]);
-      if (queryKey === 'year') {
+      if (queryKey === 'year' && val !== 'all') {
         val = parseFloat(val);
       }
       setSelectDefault(queryKey, val);

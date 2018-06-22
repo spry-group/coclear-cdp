@@ -88,10 +88,11 @@ function mapRow(colIndexes, row) {
 }
 
 function updateCopy() {
-  document.querySelector('#title-text').innerHTML = copy.title;
-  document.querySelector('#header-text').innerHTML = copy.header;
-  document.querySelector('#footer-text1').innerHTML = copy.footer1;
-  document.querySelector('#footer-text2').innerHTML = copy.footer2;
+  document.getElementById('title-text').innerHTML = copy.title;
+  document.getElementById('header-text').innerHTML = copy.header;
+  document.getElementById('footer-text1').innerHTML = copy.footer1;
+  document.getElementById('footer-text2').innerHTML = copy.footer2;
+  document.getElementById('footer-img').src = copy.footerImg;
 
   let yearRange = d3.extent(data, (d) => d.year);
       yearRange = JSON.stringify(yearRange[0]) + '-' + JSON.stringify(yearRange[1]).substring(2);

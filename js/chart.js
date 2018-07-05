@@ -30,15 +30,15 @@ function createChart(data) {
    .attr('class', 'deltaCircles')
 
   x = d3.scaleBand()
-            .range([0, 2 * Math.PI])
-            .align(0);
+          .range([0, 2 * Math.PI])
+          .align(0);
 
   y = d3.scaleRadial()
-            .range([innerRadius, outerRadius])
+          .range([innerRadius, outerRadius])
 
   z = d3.scaleOrdinal()
-            .range(['#686667', '#00bff5', '#b8bfc9', '#ff8b00'])
-            .domain(categories);
+          .range(['#686667', '#00bff5', '#b8bfc9', '#ff8b00'])
+          .domain(categories);
 
   yAxis = g.append('g')
            .attr('text-anchor', 'middle')
@@ -83,17 +83,17 @@ function updateChart(updatedData) {
   let paths = arcsEnter.merge(arcs)
                        .attr('fill', function(d) { return z(d.key); })
                        .selectAll('path')
-                       .data(function(d) { return d; });
+                       .data(transformToPercent);
   paths.exit().remove();
 
   let pathsEnter = paths.enter().append('path');
 
   pathsEnter.merge(paths)
             .attr('d', d3.arc()
-              .innerRadius(function(d) { return y(d[0]); })
-              .outerRadius(function(d) { return y(d[1]); })
+              .innerRadius(function(d) { return d[0]; })
+              .outerRadius(function(d) { return d[1]; })
               .startAngle(function(d) { return x(d.data.id); })
-                                                        // cap band width to ensure it doesn't look like a pie chart
+                                      // cap band width to ensure it doesn't look like a pie chart
               .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.21 ? x.bandwidth() : 0.21); })
               .padAngle(0.01)
               .padRadius(innerRadius)
@@ -195,7 +195,7 @@ function drawYAxis(updatedData) {
   yAxis.node().parentNode.append(yAxis.node());
   yAxis.selectAll('g').remove();
   var yTick = yAxis.selectAll('g')
-                  .data([0.1, 1, 10, 100, 300]);
+                  .data([0.1, 1, 10, 100, 300, 500]);
 
   yTickEnter = yTick.enter().append('g');
 
@@ -220,4 +220,45 @@ function drawYAxis(updatedData) {
 
   // Move chart title back on top
   chartTitle.node().parentNode.append(chartTitle.node());
+}
+
+// Accurately display breakdown of bar arcs by percent, instead of the exponential scale.
+function transformToPercent(d) {
+  d.forEach(datum => {
+    let downstream = parseFloat(datum.data.downstreamPer);
+    let manufacturing = parseFloat(datum.data.manufacturingPer);
+    let upstream = parseFloat(datum.data.upstreamPer);
+    let start = getStartingPercent(d.key, downstream, manufacturing);
+    let end = getEndingPercent(d.key, downstream, manufacturing, upstream);
+
+    if (d.key === 'stage data not available') {
+      datum[0] = y(0);
+      datum[1] = datum.data[d.key] > 0 ? y(datum.data[d.key]) : y(0);
+      return;
+    }
+
+    datum[0] = getPixels(start, datum);
+    datum[1] = getPixels(end, datum);
+  });
+  return d;
+}
+
+function getStartingPercent(key, downstream, manufacturing) {
+  return key === 'downstream'     ? 0 :
+         key === 'manufacturing'  ? downstream :
+                                    downstream + manufacturing;
+}
+
+function getEndingPercent(key, downstream, manufacturing, upstream) {
+  return key === 'downstream'     ? downstream :
+         key === 'manufacturing'  ? downstream + manufacturing :
+         key === 'upstream'       ? downstream + manufacturing + upstream :
+                                    0;
+}
+
+function getPixels(percent, datum) {
+  // We want to break the bars into a percentages on a linear scale instead of an exponential one
+  // To do this we calculate absolute pixel values, and need to offset the inner radius
+  let pixels = percent / 100 * (y(datum.data.carbonInt) - y(0));
+  return pixels + y(0);
 }

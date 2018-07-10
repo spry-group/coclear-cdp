@@ -153,7 +153,7 @@ function showToolTip(d) {
   d3.select('#tt-footprint').html(d.data.footprint);
   d3.select('#tt-carbonInt').html(d.data.carbonInt);
   d3.select('#tt-weight').html(d.data.weight);
-  d3.select('#tt-coclearId').html(d.data.weight);
+  d3.select('#tt-coclearId').html(d.data.coclearId);
 
   d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Unknown');
   d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Unknown');

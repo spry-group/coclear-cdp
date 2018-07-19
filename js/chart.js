@@ -155,9 +155,9 @@ function showToolTip(d) {
   d3.select('#tt-weight').html(d.data.weight);
   d3.select('#tt-coclearId').html(d.data.coclearId);
 
-  d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Unknown');
-  d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Unknown');
-  d3.select('#tt-downstreamPer').html(d.data.downstreamPer || 'Unknown');
+  d3.select('#tt-upstreamPer').html(d.data.upstreamPer || 'Not reported');
+  d3.select('#tt-manufacturingPer').html(d.data.manufacturingPer || 'Not reported');
+  d3.select('#tt-downstreamPer').html(d.data.downstreamPer || 'Not reported');
 
   d3.select('#tt-weightSource').html(d.data.weightSource);
   d3.select('#tt-protocol').html(d.data.protocol);

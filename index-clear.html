@@ -1,6 +1,5 @@
 <html>
 <head>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans|Roboto" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js" integrity="sha256-hYXbQJK4qdJiAeDVjjQ9G0D6A0xLnDQ4eJI9dkm7Fpk=" crossorigin="anonymous"></script>
@@ -18,18 +17,17 @@
       <div class="row pt-3 pt-xxl-0 pl-xxxl-3 pr-xxxl-3">
         <div class="col-12">
           <h1 id="title-text">Carbon Intensity & Life Cycle Emissions</h1>
-          <h4>CDP Data <span class="yearRange"></span></h4>
         </div>
         <div id="header-text" class="col-6 col-xxl-12 pb-xxl-5"></div>
         <div class="col-3 col-xxl-12 lists pb-xxl-3">
-          <strong>Life Cycle C02e Emissions</strong>
+          <strong>Life cycle carbon emissions</strong>
           <div><span class="key key-upstream"></span> Upstream</div>
           <div><span class="key key-manufacturing"></span> Manufacturing</div>
           <div><span class="key key-downstream"></span> Downstream</div>
           <div><span class="key key-notAvailable"></span> Stage data not available</div>
         </div>
         <div class="col-3 col-xxl-12 lists">
-          <strong>Reported Emission Change</strong>
+          <strong>Reported carbon emissions change</strong>
           <div><span class="deltaCircle decrease"></span>Decrease in product emissions</div>
           <div><span class="deltaCircle increase"></span>Increase in product emissions</div>
         </div>
@@ -110,7 +108,7 @@
       <div class="col-3 stats">
           <div class="font-weight-bold pb-1">
             <img src="img/icon-emission-breakdown.svg">
-            Emissions breakdown
+            Life cycle carbon emissions
           </div>
           <div><span class="font-weight-bold color-upstream">Upstream </span> <span id="tt-upstreamPer"></span></div>
           <div><span class="font-weight-bold color-manufacturing">Manufacturing </span> <span id="tt-manufacturingPer"></span></div>
@@ -119,7 +117,7 @@
       <div class="col-6 stats">
           <div class="font-weight-bold pb-1">
             <img src="img/icon-footprint-change.svg">
-            GHG Footprint change
+            Carbon Footprint change
           </div>
           <div id="tt-footprintChange"></div>
       </div>

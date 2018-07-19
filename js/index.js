@@ -93,11 +93,6 @@ function updateCopy() {
   document.getElementById('footer-text1').innerHTML = copy.footer1;
   document.getElementById('footer-text2').innerHTML = copy.footer2;
   document.getElementById('footer-img').src = copy.footerImg;
-
-  let yearRange = d3.extent(data, (d) => d.year);
-      yearRange = JSON.stringify(yearRange[0]) + '-' + JSON.stringify(yearRange[1]).substring(2);
-
-  document.querySelector('#header .yearRange').innerHTML = yearRange;
 }
 
 function sortCompany(a, b) {

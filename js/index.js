@@ -43,6 +43,7 @@ function cleanAndParseData(sourceData) {
     dataCorrections: cols.indexOf('CoClear DataCorrections Comment'),
     protocol: cols.indexOf('CoClear Protocol Mapping'),
     footprintChangePer: cols.indexOf('Footprint %Change'),
+    footprintChangeCategory: cols.indexOf('CoClear-Change Category'),
     footprintChangeReason: cols.indexOf('Reason for change'),
   }
 
@@ -77,6 +78,7 @@ function mapRow(colIndexes, row) {
     dataCorrections: row[colIndexes.dataCorrections],
     protocol: row[colIndexes.protocol],
     footprintChangePer: parseFloat(row[colIndexes.footprintChangePer]),
+    footprintChangeCategory: row[colIndexes.footprintChangeCategory],
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };
   obj['upstream']                 = ((parseFloat(row[colIndexes.upstream]) || 0) / 100) * obj.carbonInt;

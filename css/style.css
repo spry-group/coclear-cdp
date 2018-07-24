@@ -122,6 +122,12 @@
       padding: 0.5em 0; }
   #tooltip .finePrint {
     font-size: 0.7em; }
+  #tooltip .increase {
+    font-weight: 700;
+    color: #f32033; }
+  #tooltip .decrease {
+    font-weight: 700;
+    color: #097625; }
 
 .deltaCircle {
   height: 0.75em;

@@ -140,15 +140,7 @@ function showToolTip(d) {
   d3.select('#tt-year').html(d.data.year);
   d3.select('#tt-name').html(d.data.name);
   d3.select('#tt-desc').html(d.data.desc);
-
-  if (d.data.footprintChangePer) {
-    let html = '<span class="deltaCircle ' + (d.data.footprintChangePer <= 0 ? 'decrease' : 'increase') + '"></span>' +
-                d.data.footprintChangePer + '% in product emissions as a result of: ' + d.data.footprintChangeReason;
-    d3.select('#tt-footprintChange').html(html);
-  } else {
-    d3.select('#tt-footprintChange').html('No change / no data');
-  }
-  d3.select('#tt-footprintChangeReason').html(d.data.footprintChangeReason);
+  d3.select('#tt-footprintChange').html(getFootprintChangeMessage(d));
 
   d3.select('#tt-footprint').html(d.data.footprint);
   d3.select('#tt-carbonInt').html(d.data.carbonInt);
@@ -177,6 +169,26 @@ function showToolTip(d) {
     }
     return d3.event.pageY + 10 + 'px';
   });
+}
+
+function getFootprintChangeMessage(d) {
+  if (!d.data.footprintChangePer) {
+    if (d.data.footprintChangeCategory === 'N/a (no %change reported)') {
+      return d.data.company + ' did not yet report a change in emissions.';
+    }
+    return 'N/a (first time ' + d.data.company + ' reported on this product).';
+  }
+
+  if (d.data.footprintChangeCategory === 'No specific reason reported') {
+    return d.data.company + ' did not report a reason for the emission ' +
+      (d.data.footprintChangePer > 0 ? '<span class="increase">increase</span>' :
+                                       '<span class="decrease">decrease</span>') + '.';
+  }
+
+  return d.data.company + ' reported a ' +
+    (d.data.footprintChangePer > 0 ? '<span class="increase">' + d.data.footprintChangePer + '% increase</span>' :
+                                     '<span class="decrease">' + d.data.footprintChangePer + '% decrease</span>') +
+    ' in product emissions in product emissions, with the following explanation: ' + d.data.footprintChangeReason;
 }
 
 function removeToolTip(d) {

@@ -175,10 +175,18 @@ $max-width: 960px;
     }
   }
 
-
-
   .finePrint {
     font-size: 0.7em;
+  }
+
+  .increase {
+    font-weight: 700;
+    color: $increase;
+  }
+
+  .decrease {
+    font-weight: 700;
+    color: $decrease;
   }
 }
 

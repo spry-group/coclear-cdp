@@ -70,10 +70,9 @@
   padding: 0 1.8em 2em 1.8em;
   font-weight: 600; }
   #footer .logo {
-    background: url("../img/logo-coclear.jpg") no-repeat;
-    background-size: contain;
-    width: 7rem;
-    height: 3em; }
+    width: 115px; }
+    #footer .logo.logo-spry {
+      width: 108px; }
   #footer #footer-img {
     max-height: 10em;
     width: auto; }

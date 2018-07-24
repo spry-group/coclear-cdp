@@ -106,10 +106,11 @@ $max-width: 960px;
   font-weight: 600;
 
   .logo {
-    background: url("../img/logo-coclear.jpg") no-repeat;
-    background-size: contain;
-    width: 7rem;
-    height: 3em;
+    width: 115px;
+    &.logo-spry {
+      // Coclear and CDP logos are shorter, so we equalize it
+      width: 108px;
+    }
   }
 
   #footer-img {

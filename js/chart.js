@@ -179,16 +179,16 @@ function getFootprintChangeMessage(d) {
     return 'N/a (first time ' + d.data.company + ' reported on this product).';
   }
 
+  let deltaText = (d.data.footprintChangePer > 0 ?
+    '<span class="increase">' + Math.abs(d.data.footprintChangePer) + '% increase</span>' :
+    '<span class="decrease">' + Math.abs(d.data.footprintChangePer) + '% decrease</span>');
+
   if (d.data.footprintChangeCategory === 'No specific reason reported') {
-    return d.data.company + ' did not report a reason for the emission ' +
-      (d.data.footprintChangePer > 0 ? '<span class="increase">increase</span>' :
-                                       '<span class="decrease">decrease</span>') + '.';
+    return d.data.company + ' did not report a reason for the ' + deltaText + ' in product emissions';
   }
 
-  return d.data.company + ' reported a ' +
-    (d.data.footprintChangePer > 0 ? '<span class="increase">' + d.data.footprintChangePer + '% increase</span>' :
-                                     '<span class="decrease">' + d.data.footprintChangePer + '% decrease</span>') +
-    ' in product emissions in product emissions, with the following explanation: ' + d.data.footprintChangeReason;
+  return d.data.company + ' reported a ' + deltaText + ' in product emissions, with the following explanation: ' +
+    d.data.footprintChangeReason;
 }
 
 function removeToolTip(d) {

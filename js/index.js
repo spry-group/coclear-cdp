@@ -69,6 +69,7 @@ function mapRow(colIndexes, row) {
     sector: row[colIndexes.sector],
     year: parseInt(row[colIndexes.year]),
     footprint: parseFloat(row[colIndexes.footprint]),
+    footprintLabel: row[colIndexes.footprint],
     upstreamPer: row[colIndexes.upstream],
     manufacturingPer: row[colIndexes.operation],
     downstreamPer: row[colIndexes.downstream],

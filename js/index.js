@@ -74,6 +74,7 @@ function mapRow(colIndexes, row) {
     manufacturingPer: row[colIndexes.operation],
     downstreamPer: row[colIndexes.downstream],
     carbonInt: parseFloat(row[colIndexes.carbonInt]),
+    carbonIntLabel: row[colIndexes.carbonInt],
     weight: row[colIndexes.weight],
     weightSource: row[colIndexes.weightSource],
     dataCorrections: row[colIndexes.dataCorrections],

@@ -176,6 +176,20 @@ $max-width: 960px;
     }
   }
 
+  .button-close {
+    position: absolute;
+    top: 0.075em;
+    right: 0.3em;
+    font-size: 2em;
+  }
+
+  img.logo-coclear {
+    position: absolute;
+    top: 0.65em;
+    right: 3.5em;
+    width: 6.5em;
+  }
+
   .finePrint {
     font-size: 0.7em;
   }

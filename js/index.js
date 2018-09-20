@@ -26,6 +26,7 @@ function cleanAndParseData(sourceData) {
   let cols = sourceData.shift();
   let colIndexes = {
     company: cols.indexOf('Organisation'),
+    country: cols.indexOf('Country'),
     name: cols.indexOf('Product name'),
     id: cols.indexOf('CoClear-Product ID'),
     desc: cols.indexOf('Product detail'),
@@ -62,6 +63,7 @@ function cleanAndParseData(sourceData) {
 function mapRow(colIndexes, row) {
   let obj = {
     company: row[colIndexes.company],
+    country: row[colIndexes.country],
     name: row[colIndexes.name],
     coclearId: row[colIndexes.id],
     id: row[colIndexes.id] + row[colIndexes.year],
@@ -80,6 +82,7 @@ function mapRow(colIndexes, row) {
     dataCorrections: row[colIndexes.dataCorrections],
     protocol: row[colIndexes.protocol],
     footprintChangePer: parseFloat(row[colIndexes.footprintChangePer]),
+    footprintChangePerLabel: row[colIndexes.footprintChangePer].replace('-', ''),
     footprintChangeCategory: row[colIndexes.footprintChangeCategory],
     footprintChangeReason: row[colIndexes.footprintChangeReason],
   };

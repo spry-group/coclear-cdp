@@ -135,7 +135,7 @@ function updateChart(updatedData) {
 function showToolTip(d) {
   lastMouseOver = d.data.id;
   // Update tooltip data
-  d3.select('#tt-company').html(d.data.company);
+  d3.select('#tt-company').html(d.data.company + ' &vert; ' + d.data.country);
   d3.select('#tt-sector').html(d.data.sector);
   d3.select('#tt-year').html(d.data.year);
   d3.select('#tt-name').html(d.data.name);
@@ -174,14 +174,14 @@ function showToolTip(d) {
 function getFootprintChangeMessage(d) {
   if (!d.data.footprintChangePer) {
     if (d.data.footprintChangeCategory === 'N/a (no %change reported)') {
-      return d.data.company + ' did not yet report a change in emissions.';
+      return d.data.company + ' did not yet report a change in emissions for this product.';
     }
     return 'N/a (first time ' + d.data.company + ' reported on this product).';
   }
 
   let deltaText = (d.data.footprintChangePer > 0 ?
-    '<span class="increase">' + Math.abs(d.data.footprintChangePer) + '% increase</span>' :
-    '<span class="decrease">' + Math.abs(d.data.footprintChangePer) + '% decrease</span>');
+    '<span class="increase">' + d.data.footprintChangePerLabel + ' increase</span>' :
+    '<span class="decrease">' + d.data.footprintChangePerLabel + ' decrease</span>');
 
   if (d.data.footprintChangeCategory === 'No specific reason reported') {
     return d.data.company + ' did not report a reason for the ' + deltaText + ' in product emissions';

@@ -24,10 +24,10 @@
           <div><span class="key key-upstream"></span> Upstream</div>
           <div><span class="key key-manufacturing"></span> Manufacturing</div>
           <div><span class="key key-downstream"></span> Downstream</div>
-          <div><span class="key key-notAvailable"></span> Stage data not available</div>
+          <div><span class="key key-notAvailable"></span> Stage data not reported</div>
         </div>
         <div class="col-3 col-xxl-12 lists">
-          <strong>Reported carbon emissions change</strong>
+          <strong>Reported change</strong>
           <div><span class="deltaCircle decrease"></span>Decrease in product emissions</div>
           <div><span class="deltaCircle increase"></span>Increase in product emissions</div>
         </div>
@@ -35,38 +35,38 @@
     </div>
     <div class="d-xxl-inline-flex col-12 order-xxl-0 filterContainer">
       <form id="filters">
-          <div class="form-row">
-            <div class="col-4 col-xxl-3">
-              <div class="select-wrapper">
-                <select id="select-sort" class="form-control ">
-                  <option value="intensity">Order by Carbon Intensity</option>
-                  <option value="company">Order by Company Name</option>
-                  <option value="sector">Order by Sector</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="select-wrapper">
-                <select id="select-sector" class="form-control">
-                  <option value="all">View All Sectors</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-2 col-xxl-3">
-              <div class="select-wrapper">
-                <select id="select-year" class="form-control">
-                  <option value="all">View All Years</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="select-wrapper">
-                <select id="select-company" class="form-control">
-                  <option value="all">View All Companies</option>
-                </select>
-              </div>
+        <div class="form-row">
+          <div class="col-3">
+            <div class="select-wrapper">
+              <select id="select-sector" class="form-control">
+                <option value="all">View All Sectors</option>
+              </select>
             </div>
           </div>
+          <div class="col-3">
+            <div class="select-wrapper">
+              <select id="select-company" class="form-control">
+                <option value="all">View All Companies</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-2 col-xxl-3">
+            <div class="select-wrapper">
+              <select id="select-year" class="form-control">
+                <option value="all">View All Years</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4 col-xxl-3">
+            <div class="select-wrapper">
+              <select id="select-sort" class="form-control ">
+                <option value="intensity">Order by Carbon Intensity</option>
+                <option value="company">Order by Company Name</option>
+                <option value="sector">Order by Sector</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
     <div class="d-xxl-inline-flex col-12 col-xxl-8 col-xxxl-6 order-xxl-2 p-0 text-center">
@@ -110,6 +110,8 @@
     <div class="font-weight-bold pb-2"><span id="tt-sector"></span></div>
     <div id="tt-desc"></div>
   </div>
+  <div class="button-close">&times;</div>
+  <img class="logo-coclear" src="img/logo-coclear-blue.svg" />
   <div class="col-12 pt-3">
     <div class="row row-eq-height">
       <div class="col-3 stats">
@@ -119,13 +121,13 @@
           </div>
           <div><span class="font-weight-bold">Emissions (kg CO2e): </span> <span id="tt-footprint"></span></div>
           <div><span class="font-weight-bold">Weight (kg): </span> <span id="tt-weight"></span></div>
-          <div><span class="font-weight-bold">Carbon Intensity*: </span> <span id="tt-carbonInt"></span></div>
-          <div><span class="font-weight-bold">CoClear Id: </span> <span id="tt-coclearId"></span></div>
+          <div><span class="font-weight-bold">Carbon Intensity: </span> <span id="tt-carbonInt"></span></div>
+          <div><span class="font-weight-bold">CoClear ID: </span> <span id="tt-coclearId"></span></div>
       </div>
       <div class="col-3 stats">
           <div class="font-weight-bold pb-1">
             <img src="img/icon-emission-breakdown.svg">
-            Life cycle carbon emissions
+            Life cycle emissions
           </div>
           <div><span class="font-weight-bold color-upstream">Upstream </span> <span id="tt-upstreamPer"></span></div>
           <div><span class="font-weight-bold color-manufacturing">Manufacturing </span> <span id="tt-manufacturingPer"></span></div>
@@ -145,6 +147,7 @@
     <span class="font-weight-bold">Product Weight Source:</span> <span id="tt-weightSource"></span>.
     <span class="font-weight-bold">Standard followed to calculate emissions:</span> <span id="tt-protocol"></span>.
     <span class="font-weight-bold">Data Corrections:</span> <span id="tt-dataCorrections"></span>.
+    Data subject to CoClear copyright. Unauthorized use for commercial purposes prohibited. For access to full dataset, please contact info@coclear.co.
   </div>
 </div>
 

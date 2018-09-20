@@ -119,6 +119,16 @@
     border: 3px #f6f7f9 solid; }
     #tooltip .stats > div {
       padding: 0.5em 0; }
+  #tooltip .button-close {
+    position: absolute;
+    top: 0.075em;
+    right: 0.3em;
+    font-size: 2em; }
+  #tooltip img.logo-coclear {
+    position: absolute;
+    top: 0.65em;
+    right: 3.5em;
+    width: 6.5em; }
   #tooltip .finePrint {
     font-size: 0.7em; }
   #tooltip .increase {

@@ -103,7 +103,7 @@ function updateChart(updatedData) {
   // Delta circles
   let circleRadius = innerRadius / updatedData.length * 0.75;
       circleRadius = circleRadius < 1.7 ? 1.7 : circleRadius;
-      circleRadius = circleRadius > 30  ? 30  : circleRadius;
+      circleRadius = circleRadius > 15  ? 15  : circleRadius;
 
   let emissionDeltas = g.select('.deltaCircles')
                         .selectAll('.emissionDelta')
@@ -122,7 +122,7 @@ function updateChart(updatedData) {
                                    .attr('stroke', 'none')
                                    .attr('r', circleRadius)
                                    .attr('transform', function(d) {
-                                      let bandwidth = x.bandwidth() < 0.5 ? x.bandwidth() : 0.5;
+                                      let bandwidth = x.bandwidth() < 0.21 ? x.bandwidth() : 0.21;
                                       return 'rotate(' + (
                                         ((x(d.id) + bandwidth / 2) * 180) / Math.PI - 90
                                       ) + ') translate(' + (innerRadius - circleRadius * 2.5) + ', 0)';

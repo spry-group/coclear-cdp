@@ -23,6 +23,7 @@ function createChart(data) {
   outerRadius = Math.min(width, height) / 2 - 25;
   tooltip = d3.select('#tooltip');
   ttWidth = + tooltip.attr('width');
+  ttHeight = + tooltip.attr('height');
   ttOffset = document.getElementById('chart').getBoundingClientRect().x - 20;
 
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
@@ -164,11 +165,28 @@ function showToolTip(d) {
     return ttOffset + 'px';
   })
   .style('top', function() {
-    if (d3.event.offsetY > height / 2) {
-      return d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 + 'px';
-    }
-    return d3.event.pageY + 10 + 'px';
+    // Try to put tooltip above or below the mouse.
+    let ttTop = d3.event.offsetY > height / 2 ? d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 :
+                                                d3.event.pageY + 10;
+    // Ensure the tooltip is always fully on screen
+    return ttForceOnScreen(ttTop) + 'px';
   });
+}
+
+function ttForceOnScreen(ttTop) {
+    let boundingBox = tooltip.node().getBoundingClientRect();
+    let viewportHeight = (window.innerHeight || document.documentElement.clientHeight);
+    let scrollTop = window.pageYOffset ||
+                    (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
+    if (ttTop < scrollTop) {
+      // Too high
+      return scrollTop + 10;
+    } else if (ttTop + boundingBox.height > scrollTop + viewportHeight) {
+      // Too low
+      return scrollTop + viewportHeight - boundingBox.height - 10;
+    }
+    return ttTop;
 }
 
 function getFootprintChangeMessage(d) {

@@ -12,19 +12,43 @@
       margin: 0 auto;
       font-style: italic;
       font-weight: 600;
+      text-align: left;
     }
     h2 {
       margin: 1em 0;
     }
-    iframe {
+    iframe#coclear-cdp-chart {
       border: 1px solid black;
+      width: 500px;
+      height: 1000px;
+    }
+    @media (min-width: 600px) {
+      iframe#coclear-cdp-chart {
+        width: 960px;
+        height: 1600px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Embed Code:</h3>
-  <div class="code">&lt;iframe src=&quot;//spry-group.com/coclear-cdp//index.html&quot; width=&quot;960px&quot; height=&quot;1500px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;</div>
+  <pre class="code">
+    &lt;style&gt;
+      iframe#coclear-cdp-chart {
+        border: 1px solid black;
+        width: 500px;
+        height: 1000px;
+      }
+      @media (min-width: 600px) {
+        iframe#coclear-cdp-chart {
+          width: 960px;
+          height: 1600px;
+        }
+      }
+    &lt;/style&gt;
+    &lt;iframe src=&quot;//spry-group.com/coclear-cdp/index-clear.html&quot; id="coclear-cdp-chart" scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;
+  </pre>
   <h2>Example:</h2>
-  <iframe src="//spry-group.com/coclear-cdp/index.html" width="960px" height="1500px" scrolling="no"></iframe>
+  <iframe src="//spry-group.com/coclear-cdp/index-clear.html" id="coclear-cdp-chart" scrolling="no"></iframe>
 </body>
 </html>

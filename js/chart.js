@@ -136,8 +136,7 @@ function updateChart(updatedData) {
 function showToolTip(d) {
   lastMouseOver = d.data.id;
   // Update tooltip data
-  d3.select('#tt-company').html(d.data.company + ' &vert; ' + d.data.country);
-  d3.select('#tt-sector').html(d.data.sector);
+  d3.select('#tt-topline').html(d.data.company + ' &vert; ' + d.data.country + ' &vert; ' + d.data.sector);
   d3.select('#tt-year').html(d.data.year);
   d3.select('#tt-name').html(d.data.name);
   d3.select('#tt-desc').html(d.data.desc);

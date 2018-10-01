@@ -24,7 +24,7 @@ function createChart(data) {
   tooltip = d3.select('#tooltip');
   ttWidth = + tooltip.attr('width');
   ttHeight = + tooltip.attr('height');
-  ttOffset = document.getElementById('chart').getBoundingClientRect().x - 20;
+  ttOffset = document.getElementById('chart').getBoundingClientRect().x + ((width-ttWidth) / 2);
 
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
   g.append('g')

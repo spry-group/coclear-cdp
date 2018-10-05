@@ -9,15 +9,17 @@ function createFilters(data) {
   const sectorSelect = d3.select('#select-sector');
   const yearSelect = d3.select('#select-year');
   const companySelect = d3.select('#select-company');
+  let firstYear = Math.min(...getUniqueValues(data, 'year'));
 
   populateSelect(sectorSelect, getUniqueValues(data, 'sector'));
   populateSelect(yearSelect, getUniqueValues(data, 'year'));
-  populateSelect(companySelect, getUniqueValues(data, 'company'));
+  populateSelect(companySelect, getUniqueCompaniesByYear(firstYear));
   bindSelect(sortSelect, 'sort');
   bindSelect(sectorSelect, 'sector');
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
-  setSelectDefault('year', Math.min(...getUniqueValues(data, 'year')));
+  setSelectDefault('year', firstYear);
+  setSelectDefault('sort', 'company');
   updateData();
 }
 
@@ -90,6 +92,13 @@ function avoidConflicts(ele, key) {
   }
 }
 
+function getUniqueCompaniesByYear(year) {
+  return getUniqueValues(
+    data.filter(d => d.year === year),
+    'company'
+  )
+}
+
 function populateCompaniesByYear(ele, key) {
   let selectedVal = ele.node().value;
   const companySelect = d3.select('#select-company');
@@ -100,10 +109,7 @@ function populateCompaniesByYear(ele, key) {
 
   // Show only companies who we have data for that year.
   selectedVal = parseInt(selectedVal);
-  let companiesInYear = getUniqueValues(
-    data.filter(d => d.year === selectedVal),
-    'company'
-  )
+  let companiesInYear = getUniqueCompaniesByYear(selectedVal);
   populateSelect(companySelect, companiesInYear);
 
   // If the selected company doesn't have data for this year then reset the company selector

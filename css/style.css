@@ -151,6 +151,7 @@
 
 select.form-control {
   font-weight: 600;
+  font-size: 0.75em;
   background: white;
   background: -moz-linear-gradient(top, white 0%, #fdfdfd 21%, #fafafa 50%, #fdfdfd 80%, #fafafa 100%);
   background: -webkit-linear-gradient(top, white 0%, #fdfdfd 21%, #fafafa 50%, #fdfdfd 80%, #fafafa 100%);

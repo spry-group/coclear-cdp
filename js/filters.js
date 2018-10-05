@@ -1,7 +1,7 @@
 var filters = {
   sort: 'intensity',
   sector: 'all',
-  year: 2015,
+  year: 2013,
   company: 'all'
 }
 function createFilters(data) {
@@ -17,7 +17,7 @@ function createFilters(data) {
   bindSelect(sectorSelect, 'sector');
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
-  setSelectDefault('year', Math.max(...getUniqueValues(data, 'year')));
+  setSelectDefault('year', Math.min(...getUniqueValues(data, 'year')));
   updateData();
 }
 

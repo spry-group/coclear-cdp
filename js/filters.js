@@ -1,5 +1,5 @@
 var filters = {
-  sort: 'intensity',
+  sort: 'company',
   sector: 'all',
   year: 2013,
   company: 'all'
@@ -83,6 +83,34 @@ function avoidConflicts(ele, key) {
     document.getElementById('select-' + conflict).value = 'all';
     updateQueryParam(conflict, 'all');
   }
+
+  // Restrict company list to companies with data for that year
+  if (key === 'year') {
+    populateCompaniesByYear(ele, key);
+  }
+}
+
+function populateCompaniesByYear(ele, key) {
+  let selectedVal = ele.node().value;
+  const companySelect = d3.select('#select-company');
+
+  if (selectedVal === 'all') {
+    return populateSelect(companySelect, getUniqueValues(data, 'company'));
+  }
+
+  // Show only companies who we have data for that year.
+  selectedVal = parseInt(selectedVal);
+  let companiesInYear = getUniqueValues(
+    data.filter(d => d.year === selectedVal),
+    'company'
+  )
+  populateSelect(companySelect, companiesInYear);
+
+  // If the selected company doesn't have data for this year then reset the company selector
+  if (companiesInYear.indexOf(filters.company) === -1) {
+    setSelectDefault('company', 'all');
+  }
+
 }
 
 function filterRemainingOptions(key, val) {

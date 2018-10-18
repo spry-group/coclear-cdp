@@ -13,7 +13,8 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     z, // z scale (categories)
     yAxis,
     chartTitle,
-    lastMouseOver;
+    lastID,
+    lastStage;
 
 
 function createChart(data) {
@@ -79,12 +80,16 @@ function updateChart(updatedData) {
 
   let arcsEnter = arcs.enter()
                       .append('g')
-                      .attr('class', 'arc');
+                      .attr('class', 'arc')
+                      .attr('stage', function(d) { return d.key })
+                      .on('mouseover', function(d) { lastStage = d.key });
 
   let paths = arcsEnter.merge(arcs)
                        .attr('fill', function(d) { return z(d.key); })
                        .selectAll('path')
-                       .data(transformToPercent);
+                       .data(transformToPercent)
+                       .on('mouseover', showToolTip)
+                       .on('mouseleave', removeToolTip);
   paths.exit().remove();
 
   let pathsEnter = paths.enter().append('path');
@@ -98,8 +103,7 @@ function updateChart(updatedData) {
               .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.21 ? x.bandwidth() : 0.21); })
               .padAngle(0.01)
               .padRadius(innerRadius)
-            ).on('mouseover', showToolTip)
-             .on('mouseout', removeToolTip);
+            );
 
   // Delta circles
   let circleRadius = innerRadius / updatedData.length * 0.75;
@@ -134,7 +138,8 @@ function updateChart(updatedData) {
 }
 
 function showToolTip(d) {
-  lastMouseOver = d.data.id;
+  lastID = d.data.id;
+
   // Update tooltip data
   d3.select('#tt-topline').html(d.data.company + ' &vert; ' + d.data.country + ' &vert; ' + d.data.sector);
   d3.select('#tt-year').html(d.data.year);
@@ -211,7 +216,7 @@ function getFootprintChangeMessage(d) {
 function removeToolTip(d) {
   // Confirm we moused out and not just to a new bar before hiding tooltip
   setTimeout(() => {
-    if (d.data.id === lastMouseOver) {
+    if (d.data.id === lastID && lastStage === this.parentElement.getAttribute('stage')) {
       tooltip.transition()
           .duration(250)
           .style('opacity', 0);

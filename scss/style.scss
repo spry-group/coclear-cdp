@@ -92,7 +92,7 @@ $max-width: 960px;
 #chart {
   margin: 2em auto 0 auto;
 
-  .yAxis {
+  .yAxis, circle {
     pointer-events: none;
   }
 }

@@ -52,7 +52,7 @@ function bindSelect(ele, key) {
     avoidConflicts(ele, key);
     filterRemainingOptions(key, val);
     updateData();
-    updateQueryParam(key, val);
+    // updateQueryParam(key, val);
   });
 }
 
@@ -83,7 +83,7 @@ function avoidConflicts(ele, key) {
     let conflict = key === 'sector' ? 'company' : 'sector';
     filters[conflict] = 'all';
     document.getElementById('select-' + conflict).value = 'all';
-    updateQueryParam(conflict, 'all');
+    // updateQueryParam(conflict, 'all');
   }
 
   // Restrict company list to companies with data for that year

@@ -87,9 +87,7 @@ function updateChart(updatedData) {
   let paths = arcsEnter.merge(arcs)
                        .attr('fill', function(d) { return z(d.key); })
                        .selectAll('path')
-                       .data(transformToPercent)
-                       .on('mouseover', showToolTip)
-                       .on('mouseleave', removeToolTip);
+                       .data(transformToPercent);
   paths.exit().remove();
 
   let pathsEnter = paths.enter().append('path');
@@ -103,7 +101,8 @@ function updateChart(updatedData) {
               .endAngle(function(d) { return x(d.data.id) + (x.bandwidth() < 0.21 ? x.bandwidth() : 0.21); })
               .padAngle(0.01)
               .padRadius(innerRadius)
-            );
+            ).on('mouseover', showToolTip)
+             .on('mouseleave', removeToolTip);
 
   // Delta circles
   let circleRadius = innerRadius / updatedData.length * 0.75;

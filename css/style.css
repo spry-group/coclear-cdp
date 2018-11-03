@@ -15,7 +15,7 @@
   width: 960px;
   margin: 0 auto;
   font-size: 0.75em;
-  padding: 2em 1.8em;
+  padding: 1em;
   background: #f6f7f9; }
   #header h1 {
     font-size: 1.95em;
@@ -78,7 +78,7 @@
     width: auto; }
 
 #header, #footer {
-  padding: 3em 4em 1em 4em; }
+  padding: 1.5em 4em 1em 4em; }
   @media (min-width: 1600px) {
     #header, #footer {
       background: #fff;

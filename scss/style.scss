@@ -30,7 +30,7 @@ $max-width: 960px;
   width: $max-width;
   margin: 0 auto;
   font-size: 0.75em;
-  padding: 2em 1.8em;
+  padding: 1em;
   background: $background-grey;
 
   h1 {
@@ -120,7 +120,7 @@ $max-width: 960px;
 }
 
 #header, #footer {
-  padding: 3em 4em 1em 4em;
+  padding: 1.5em 4em 1em 4em;
 
   @media (min-width : 1600px) {
     background: #fff;

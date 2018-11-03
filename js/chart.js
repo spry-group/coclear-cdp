@@ -216,11 +216,15 @@ function removeToolTip(d) {
   // Confirm we moused out and not just to a new bar before hiding tooltip
   setTimeout(() => {
     if (d.data.id === lastID && lastStage === this.parentElement.getAttribute('stage')) {
-      tooltip.transition()
-          .duration(250)
-          .style('opacity', 0);
+      forceRemoveToolTip();
     }
   }, 100);
+}
+
+function forceRemoveToolTip() {
+  tooltip.transition()
+        .duration(250)
+        .style('opacity', 0);
 }
 
 function drawYAxis(updatedData) {

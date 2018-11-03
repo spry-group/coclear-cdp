@@ -1,5 +1,5 @@
 var filters = {
-  sort: 'company',
+  sort: 'sector',
   sector: 'all',
   year: 2013,
   company: 'all'
@@ -19,7 +19,7 @@ function createFilters(data) {
   bindSelect(yearSelect, 'year');
   bindSelect(companySelect, 'company');
   setSelectDefault('year', firstYear);
-  setSelectDefault('sort', 'company');
+  setSelectDefault('sort', 'sector');
   updateData();
 }
 

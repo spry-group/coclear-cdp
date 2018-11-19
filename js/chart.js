@@ -67,6 +67,8 @@ function createChart(data) {
       .attr('font-weight', '700');
 
   updateChart(data);
+
+  svg.on('click', closeTTOnIpadAndMobile)
 }
 
 function updateChart(updatedData) {
@@ -298,4 +300,10 @@ function getPixels(percent, datum) {
   // To do this we calculate absolute pixel values, and need to offset the inner radius
   let pixels = percent / 100 * (y(datum.data.carbonInt) - y(0));
   return pixels + y(0);
+}
+
+function closeTTOnIpadAndMobile(e) {
+  if (document.documentElement.clientWidth < 1280 && tooltip.style('opacity') === '1' ) {
+    forceRemoveToolTip()
+  }
 }

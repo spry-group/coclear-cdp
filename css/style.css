@@ -11,6 +11,9 @@
 .d-flex.row {
   margin: 0; }
 
+.container-fluid.d-xxl-flex {
+  z-index: 1; }
+
 #header {
   width: 960px;
   margin: 0 auto;
@@ -99,7 +102,8 @@
   padding: 15px 10px 8px 10px;
   font: 12px sans-serif;
   background: #f6f7f9;
-  border: 1px #999 solid; }
+  border: 1px #999 solid;
+  z-index: 100; }
   #tooltip h3 {
     font-size: 1.5em;
     margin: 0; }

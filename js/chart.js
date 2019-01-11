@@ -240,7 +240,8 @@ function drawYAxis(updatedData) {
 
   yTickEnter.append('circle')
               .attr('fill', 'none')
-              .attr('stroke', '#000')
+              .attr('stroke', '#999')
+              .attr('class', 'y-tick')
               .attr('r', y)
 
   // Mask background

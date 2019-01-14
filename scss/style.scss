@@ -34,7 +34,7 @@ $max-width: 960px;
 #header {
   width: $max-width;
   margin: 0 auto;
-  font-size: 0.75em;
+  font-size: 0.8em;
   padding: 1em;
   background: $background-grey;
 
@@ -84,7 +84,7 @@ $max-width: 960px;
 }
 
 #filters {
-  width: $max-width;
+  max-width: $max-width;
   padding: 0 3em;
   margin: 0 auto;
 
@@ -106,7 +106,7 @@ $max-width: 960px;
   width: $max-width;
   margin: 1em auto 0 auto;
   text-align: left;
-  font-size: 0.75em;
+  font-size: 0.8em;
   padding: 0 1.8em 2em 1.8em;
   font-weight: 600;
 
@@ -116,11 +116,6 @@ $max-width: 960px;
       // Coclear and CDP logos are shorter, so we equalize it
       width: 108px;
     }
-  }
-
-  #footer-img {
-    max-height: 10em;
-    width: auto;
   }
 }
 
@@ -147,7 +142,7 @@ $max-width: 960px;
   position: absolute;
   width: 850px;
   padding: 15px 10px 8px 10px;
-  font: 12px sans-serif;
+  font: 14px sans-serif;
   background: $background-grey;
   border: 1px #999 solid;
 
@@ -213,6 +208,11 @@ $max-width: 960px;
   }
 }
 
+.larger-text {
+  font-size: 1.2em;
+  line-height: 1.4;
+}
+
 .deltaCircle {
   height: 0.75em;
   width: 0.75em;
@@ -241,7 +241,7 @@ select.form-control {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 );
 
   // Prep for custom arrow
-  padding-right: 3em;
+  padding-right: 3.7em;
   -o-appearance: none;
   -ms-appearance: none;
   -webkit-appearance: none;

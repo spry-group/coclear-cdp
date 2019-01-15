@@ -5,8 +5,6 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     innerRadius = 150,
     outerRadius,
     tooltip,
-    ttWidth,
-    ttOffset,
     g, // Svg group
     x, // x scale (companies)
     y, // y scale (carbon intensity)
@@ -23,9 +21,6 @@ function createChart(data) {
   height = + svg.attr('height');
   outerRadius = Math.min(width, height) / 2 - 25;
   tooltip = d3.select('#tooltip');
-  ttWidth = + tooltip.attr('width');
-  ttHeight = + tooltip.attr('height');
-  ttOffset = document.getElementById('chart').getBoundingClientRect().x + ((width-ttWidth) / 2);
 
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
   g.append('g')
@@ -166,10 +161,7 @@ function showToolTip(d) {
           .duration(250)
           .style('opacity', .95);
   // Dynamically set tooltip position for best fit
-  tooltip.style('left', function() {
-    return ttOffset + 'px';
-  })
-  .style('top', function() {
+  tooltip.style('top', function() {
     // Try to put tooltip above or below the mouse.
     let ttTop = d3.event.offsetY > height / 2 ? d3.event.pageY - tooltip.node().getBoundingClientRect().height - 10 :
                                                 d3.event.pageY + 10;

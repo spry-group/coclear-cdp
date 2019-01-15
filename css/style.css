@@ -95,7 +95,10 @@
   pointer-events: none;
   cursor: pointer;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 850px;
+  max-width: 90%;
   padding: 15px 10px 8px 10px;
   font: 14px sans-serif;
   background: #f6f7f9;

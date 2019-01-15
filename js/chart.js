@@ -17,11 +17,12 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
 
 function createChart(data) {
   svg = d3.select('#chart');
-  width = + svg.attr('width');
-  height = + svg.attr('height');
+  width = 950;
+  height = 950;
   outerRadius = Math.min(width, height) / 2 - 25;
   tooltip = d3.select('#tooltip');
 
+  svg.attr('viewBox', '0 0 ' + width + ' ' + height);
   g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
   g.append('g')
    .attr('class', 'deltaCircles')

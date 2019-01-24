@@ -1,112 +1,119 @@
-var filters = {
-  sort: 'sector',
-  sector: 'all',
-  year: 2013,
-  company: 'all'
-}
+// global filter state.
+var filters = { sort: 'all', sector: 'all', year: 'all', company: 'all' }
+// handle for selects.
 var selects = {};
 
 function createFilters(data) {
-  selects.sort = d3.select('#select-sort');
-  selects.sector = d3.select('#select-sector');
-  selects.year = d3.select('#select-year');
-  selects.company = d3.select('#select-company');
-  const firstYear = data.reduce((result, item) => Math.min(result, item.year), Infinity);
+  // establish initial filter values
+  let year = getQueryVariable('year') || 2013;
+  if (year && year != 'all') year = parseInt(year);
+  let sector = getQueryVariable('sector') || 'all';
+  let company = getQueryVariable('company') || 'all';
+  let sort = getQueryVariable('sort') || 'sector';
 
-  bindSelect(selects.sort, 'sort');
-  bindSelect(selects.sector, 'sector');
-  bindSelect(selects.year, 'year');
-  bindSelect(selects.company, 'company');
+  Object.assign(filters, {  year, sector, company, sort });
+
+  selects.sort = d3.select('#select-sort')
+    .property('value', filters.sort || 'all')
+    .on('change', (event) => filterChanged(selects.sort));
+  selects.sector = d3.select('#select-sector')
+    .property('value', filters.sector || 'all')
+    .on('change', (event) => filterChanged(selects.sector));
+  selects.year = d3.select('#select-year')
+    .property('value', filters.year || 'all')
+    .on('change', (event) => filterChanged(selects.year));
+  selects.company = d3.select('#select-company')
+    .property('value', filters.company || 'all')
+    .on('change', (event) => filterChanged(selects.company));
   updateData();
-  setSelectDefault('year', firstYear);
-  setSelectDefault('sort', 'sector');
+}
+
+function createSelectOptions(select, options, selected) {
+  //console.log('createSelectOptions', options, selected)
+
+  // use object itself as key to identify data.
+  var optionElements = select.selectAll('option').data(options, function(d) { return d;});
+  optionElements.enter().append('option').attr('value', (d) => d).text((d) => d);
+  // use object itself as key to identify which entities to remove.
+  optionElements.exit().filter(function(d,i) { return d }).remove();
+  select.property('value', selected);
+}
+
+function filterChanged(element) {
+  let name = element.property('name');
+  let value = element.property('value');
+
+  // convert years to numeric if they're not all.
+  if (name == 'year' && value != 'all') value = parseInt(value);
+
+  // short circuit if no change, so we don't create infinite looping when
+  // modifying select options.
+  if (filters[name] == value) return;
+
+  //console.log('filterChanged', name, value);
+  filters[name] = value;
+  updateData();
+}
+
+// limit year options to all available year after applying all other filters.
+function yearOptionsFilter(data) {
+  return ( filters.company  === 'all' || data.company === filters.company) &&
+         ( filters.sector === 'all' || data.sector === filters.sector);
+}
+
+function companyOptionsFilter(data) {
+  return ( filters.year === 'all' || data.year === filters.year) &&
+         ( filters.sector === 'all' || data.sector === filters.sector)
+}
+
+function sectorOptionsFilter(data) {
+  return ( filters.year === 'all' || data.year === filters.year) &&
+         ( filters.company  === 'all' || data.company === filters.company)
+}
+
+function distinctFilter(value, index, self) {
+  return self.indexOf(value) === index;
 }
 
 
-function populateSelect(select, data) {
-  var options = select.selectAll('option')
-                      // Need the custom id mapping so we don't override the defaults
-                      .data(data, function(d) { return d; });
-  options.enter()
-         .append('option')
-            .attr('value', (d) => d)
-            .text((d) => d);
+function updateSelects() {
+  const yearOptions = data.filter(yearOptionsFilter).map(function(d) { return d.year; }).filter(distinctFilter);
+  createSelectOptions(selects.year, yearOptions, filters.year);
 
-  options.exit()
-         .filter(function(d, i) { return d; }) // Filter by key instead of index
-         .remove();
+  const companyOptions = data.filter(companyOptionsFilter).map(function(d) { return d.company }).filter(distinctFilter);
+   createSelectOptions(selects.company, companyOptions, filters.company);
+
+
+  const sectorOptions = data.filter(sectorOptionsFilter).map(function(d) { return d.sector }).filter(distinctFilter);
+  createSelectOptions(selects.sector, sectorOptions, filters.sector);
 }
 
-function bindSelect(ele, key) {
-  ele.on('change', function() {
-    console.log('change')
-    let val = ele.node().value;
-    filters[key] = key !== 'year' || val === 'all' ? val : parseInt(val);
-    updateData();
-  });
-}
-
+// to change viewed data, update the global filters object, then call updateData();
 function updateData() {
-  let newData = [...data];
-
-  let filteredData = newData.filter((data) =>
-    (filters.year === 'all' || data.year === filters.year) &&
-    (filters.company === 'all' || data.company === filters.company) &&
-    (filters.sector === 'all' || data.sector === filters.sector)
-  );
-  const yearOptions = new Set(filteredData.map((d) => d.year));
-  const companyOptions = new Set(filteredData.map((d) => d.company));
-  const sectorOptions = new Set(filteredData.map((d) => d.sector));
-  populateSelect(selects.year, Array.from(yearOptions));
-  populateSelect(selects.company, Array.from(companyOptions));
-  populateSelect(selects.sector, Array.from(sectorOptions));
-
-  console.log('wat', newData);
-  filteredData.sort(filters.sort === 'company' ?
-    sortCompany :
-    filters.sort === 'intensity' ?
-      sortIntensity :
-      sortSector
-  );
-  updateChart(filteredData);
+  updateLocation();
+  updateSelects();
+  updateChart();
 }
 
-function setSelectDefault(key, value) {
-  document.getElementById('select-' + key).value = value;
-  filters[key] = value;
-  console.log('yes', value)
-}
-
-function loadFilters() {
-  let queryDict = mapQueryParamsToDict();
-  Object.keys(queryDict).forEach(queryKey => {
-    if (queryKey in filters) {
-      let val = decodeURIComponent(queryDict[queryKey]);
-      if (queryKey === 'year' && val !== 'all') {
-        val = parseFloat(val);
-      }
-      setSelectDefault(queryKey, val);
-      filters[queryKey] = val;
+let queryParams;
+function getQueryVariable(variable) {
+  if (!queryParams) {
+    queryParams = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        queryParams[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1])
     }
-  });
-  updateData();
+  }
+  return queryParams[variable];
 }
 
 // Adds or modifies query string params
-function updateQueryParam(key, val) {
-  let queryDict = mapQueryParamsToDict();
-  queryDict[key] = encodeURIComponent(val);
-  let queryString = Object.keys(queryDict).map(queryKey => queryKey + '=' + queryDict[queryKey]).join('&');
-  history.pushState(null, '', location.href.split('?')[0] + '?' + queryString);
-}
-
-// Take all query params in the url and return them as a dictionary
-function mapQueryParamsToDict() {
-  let queryDict = {};
-  let matches = location.search.match(/(\w+)=([\w,%]+)/g);
-  if (matches) {
-    matches.forEach(match => queryDict[match.split('=')[0]] = match.split('=')[1]);
-  }
-
-  return queryDict;
+function updateLocation() {
+  var queryString = '?sector='+encodeURIComponent(filters.sector)
+                    +'&company='+encodeURI(filters.company)
+                    +'&year='+encodeURI(filters.year)
+                    +'&sort='+encodeURI(filters.sort);
+  history.pushState(null, null, location.href.split('?')[0] + '?' + queryString);
 }

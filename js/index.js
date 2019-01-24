@@ -1,9 +1,6 @@
 // TODO: eliminate globals.
 var data = [];
 var copy; // Written copy from the spreadsheet
-var companies;
-var sectors;
-var years;
 
 document.addEventListener('DOMContentLoaded', function(e) {
   d3.json('content.json', init);
@@ -18,7 +15,6 @@ function init(error, content) {
   updateCopy(content.copy);
   createChart(content.data);
   createFilters(content.data);
-  loadFilters();
 }
 
 

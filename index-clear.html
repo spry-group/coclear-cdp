@@ -1,5 +1,6 @@
 <html>
 <head>
+  <title>Coclear CDP Data Visualization</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans|Roboto" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js" integrity="sha256-hYXbQJK4qdJiAeDVjjQ9G0D6A0xLnDQ4eJI9dkm7Fpk=" crossorigin="anonymous"></script>
@@ -39,28 +40,28 @@
         <div class="form-row">
           <div class="col-12 col-md-6 col-xl-3 pb-2 pb-xl-0">
             <div class="select-wrapper">
-              <select id="select-sector" class="form-control">
+              <select id="select-sector" name="sector" class="form-control">
                 <option value="all">View All Sectors</option>
               </select>
             </div>
           </div>
           <div class="col-12 col-md-6 col-xl-3 pb-2 pb-xl-0">
             <div class="select-wrapper">
-              <select id="select-company" class="form-control">
+              <select id="select-company" name="company" class="form-control">
                 <option value="all">View All Companies</option>
               </select>
             </div>
           </div>
           <div class="col-12 col-md-6 col-xl-2 col-xxl-3 pb-2 pb-xl-0">
             <div class="select-wrapper">
-              <select id="select-year" class="form-control">
+              <select id="select-year" name="year" class="form-control">
                 <option value="all">View All Years</option>
               </select>
             </div>
           </div>
           <div class="col-12 col-md-6 col-xl-4 col-xxl-3 pb-2 pb-xl-0">
             <div class="select-wrapper">
-              <select id="select-sort" class="form-control ">
+              <select id="select-sort" name="sort" class="form-control ">
                 <option value="intensity">Order by Carbon Intensity</option>
                 <option value="company">Order by Company Name</option>
                 <option value="sector">Order by Sector</option>

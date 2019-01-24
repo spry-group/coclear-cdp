@@ -67,7 +67,17 @@ function createChart(data) {
   svg.on('click', closeTTOnIpadAndMobile)
 }
 
-function updateChart(updatedData) {
+function updateChart() {
+
+  let updatedData = data.filter(function(data) {
+    return ( filters.year === 'all' || data.year === filters.year) &&
+    ( filters.company  === 'all' || data.company === filters.company) &&
+    ( filters.sector === 'all' || data.sector === filters.sector)
+  });
+  updatedData.sort( filters.sort === 'company' ?  sortCompany : filters.sort === 'intensity' ? sortIntensity : sortSector  );
+
+
+
   x.domain(updatedData.map(function(d) { return d.id; }));
   y.domain([0, d3.max(updatedData, function(d) { return d.carbonInt; })]);
 

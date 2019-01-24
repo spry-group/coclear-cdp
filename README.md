@@ -19,5 +19,7 @@ npm run sass
 We're using static encryption before launch: https://github.com/robinmoisson/staticrypt
 ```bash
 # need to install global, not listed in project dependencies.
-staticrypt index.html passwordHere
+staticrypt index-clear.html passwordHere
+rm index.html
+cp index-clear_encrypted.html index.html
 ```

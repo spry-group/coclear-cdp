@@ -94,16 +94,29 @@ $max-width: 960px;
   }
 }
 
-#chart {
-  margin: 2em auto 0 auto;
+.chart-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
 
-  .yAxis, circle {
-    pointer-events: none;
+  #chart {
+    margin: 2em auto 0 auto;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+  
+    .yAxis, circle {
+      pointer-events: none;
+    }
   }
 }
 
 #footer {
-  width: $max-width;
+  max-width: $max-width;
   margin: 1em auto 0 auto;
   text-align: left;
   font-size: 0.8em;
@@ -130,7 +143,7 @@ $max-width: 960px;
     margin: 0;
     > .row {
       margin: 0 auto;
-      align-content: center;
+      align-content: flex-start;
       width: auto;
     }
   }
@@ -140,7 +153,10 @@ $max-width: 960px;
   pointer-events: none;
   cursor: pointer;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 850px;
+  max-width: 90%;
   padding: 15px 10px 8px 10px;
   font: 14px sans-serif;
   background: $background-grey;

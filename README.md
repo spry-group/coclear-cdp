@@ -5,7 +5,7 @@ An interactive radial stacked bar chart depicting cdp product data
 
 ```bash
 # update cached cached data
-npm run update-date
+npm run update-data
 
 # each of these will need to be ran in a separate console.
 # TODO: make this easier.

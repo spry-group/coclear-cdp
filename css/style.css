@@ -100,7 +100,7 @@
       margin: 0; }
       #header > .row, #footer > .row {
         margin: 0 auto;
-        align-content: center;
+        align-content: flex-start;
         width: auto; } }
 
 #tooltip {

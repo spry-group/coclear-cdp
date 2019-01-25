@@ -115,5 +115,5 @@ function updateLocation() {
                     +'&company='+encodeURI(filters.company)
                     +'&year='+encodeURI(filters.year)
                     +'&sort='+encodeURI(filters.sort);
-  history.pushState(null, null, location.href.split('?')[0] + '?' + queryString);
+  history.pushState(null, null, location.href.split('?')[0] + queryString);
 }

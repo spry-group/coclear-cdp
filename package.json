@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "encrypt": "staticrypt index-clear.html c0cl3ar --output index.html",
     "livereload": "livereload . -w 1000 -d",
     "sass": "node-sass --watch scss -o css",
     "serve": "http-server -a localhost --cors",

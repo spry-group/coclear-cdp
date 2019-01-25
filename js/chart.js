@@ -15,7 +15,7 @@ var categories = ['stage data not available', 'downstream', 'manufacturing', 'up
     lastStage;
 
 
-function createChart(data) {
+export function createChart(data, filters) {
   svg = d3.select('#chart');
   width = 950;
   height = 950;
@@ -62,12 +62,12 @@ function createChart(data) {
       .attr('font-size', '1.5em')
       .attr('font-weight', '700');
 
-  updateChart(data);
+  updateChart(data, filters);
 
   svg.on('click', closeTTOnIpadAndMobile)
 }
 
-function updateChart() {
+export function updateChart(data, filters) {
 
   let updatedData = data.filter(function(data) {
     return ( filters.year === 'all' || data.year === filters.year) &&

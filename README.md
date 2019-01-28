@@ -23,3 +23,10 @@ staticrypt index-clear.html passwordHere
 rm index.html
 cp index-clear_encrypted.html index.html
 ```
+
+## Errata
+
+To Bundle or not to Bundle, that is the question.
+
+Unbundled:
+21 requests, 426KB trasferred , finish: 760-820ms

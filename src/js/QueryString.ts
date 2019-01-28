@@ -19,10 +19,21 @@ export class QueryString {
 
     set(param: string, value: string): void {
       this.params[param] = encodeURIComponent(value);
+      this._update();
+    }
 
+    setAll(params: any = {}) {
+      this.params = Object.keys(params).reduce((acc: any, k: string) => {
+        acc[encodeURIComponent(k)] = encodeURIComponent(params[k]);
+        return acc;
+      }, {});
+      this._update();
+    }
+
+    private _update() {
       // update querystring in browser.
       let parts = Object.keys(this.params).map((key) => `${key}=${this.params[key]}`);
       let queryString = '?' + parts.join('&');
       history.pushState(null, null, location.href.split('?')[0] + queryString);
     }
-  }
+}

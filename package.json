@@ -5,8 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "encrypt": "staticrypt index-clear.html c0cl3ar --output index.html",
-    "build": "webpack --production",
+    "encrypt": "staticrypt dist/index.html c0cl3ar --output dist/index.html",
+    "build": "webpack --production && npm run encrypt",
     "start": "webpack-dev-server --production --compress --hot",
     "update-data": "node import_data.js"
   },

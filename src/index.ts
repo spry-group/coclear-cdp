@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function(e) {
     const queryString = new QueryString();
     const defaultSector = queryString.get('sector') || 'all';
     const defaultCompany = queryString.get('company') || 'all';
-    const defaultYear = queryString.get('year') || '2017';
+    const defaultYear = queryString.get('year') || '2015';
     const defaultSort =  queryString.get('sort') || 'sector';
 
     const defaultSectorOptions = sectorOptions(content.data, defaultCompany, defaultYear);

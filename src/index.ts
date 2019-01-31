@@ -20,7 +20,8 @@ function yearOptions(data: any, sector: string, company: string): Array<string> 
     return  (sector === 'all' || d.sector === sector) && (company === 'all' || d.company === company)
   })
   .map((d: any) => d.year)
-  .filter(distinct);
+  .filter(distinct)
+  .sort();
   return options;
 }
 
@@ -30,7 +31,8 @@ function sectorOptions(data: any, company: string, year: string): Array<string> 
     return  (company === 'all' || d.company === company) && (year === 'all' || d.year === yearInt)
   })
   .map((d: any) => d.sector)
-  .filter(distinct);
+  .filter(distinct)
+  .sort();
   return options;
 }
 
@@ -40,7 +42,8 @@ function companyOptions(data: any, sector: string, year: string): Array<string> 
     return  (sector === 'all' || d.sector === sector) && (year === 'all' || d.year === yearInt)
   })
   .map((d: any) => d.company)
-  .filter(distinct);
+  .filter(distinct)
+  .sort();
   return options;
 }
 
@@ -62,7 +65,6 @@ document.addEventListener('DOMContentLoaded', async function(e) {
     const sectorSelect$ = new ObservableSelect('sector', defaultSector, defaultSectorOptions );
     const companySelect$ = new ObservableSelect('company', defaultCompany, defaultCompanyOptions);
     const yearSelect$ = new ObservableSelect('year', defaultYear, defaultYearOptions);
-    yearSelect$.subscribe((v) => console.log('yearSelect.next', v));
     const sortSelect$ = new ObservableSelect('sort', defaultSort, []);
     const chart = new CDPChart2019('#chart', '#tooltip');
 

@@ -14,7 +14,7 @@ module.exports = {
     entry: './index.ts',
     mode: 'production',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'docs'),
       filename: 'bundle.js'
     },
     optimization: {

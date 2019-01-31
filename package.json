@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "encrypt": "staticrypt dist/index.html c0cl3ar --output dist/index.html",
-    "build": "webpack --production && npm run encrypt",
+    "build": "rimraf docs/* && webpack --production && npm run encrypt",
     "start": "webpack-dev-server --production --compress --hot",
     "update-data": "node import_data.js"
   },

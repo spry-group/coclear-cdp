@@ -10,9 +10,9 @@ import { QueryString } from './js/QueryString';
 
 console.log('(c) 2019 CoClear, Inc.');
 console.log('The visualization was designed by Erika Whilas of Coclear.');
-console.log('The Spry Group work with CoClear to refine and implementment the visualization.')
+console.log('The Spry Group collaborated with CoClear to refine and implement the visualization.')
 console.log();
-console.log('If you want to join or hire a team of developers that are passionate about sustainability, ');
+console.log('If you want to hire a team of developers that are passionate about sustainability, ');
 console.log('Send an email to opportunities@spry-group.com and introduce yourself.')
 
 function yearOptions(data: any, sector: string, company: string): Array<string> {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async function(e) {
       })
       .sort( sort === 'company' ?  sortCompany : sort === 'intensity' ? sortIntensity : sortSector  );
       chart.update(data);
-      console.log('chart/qs update', { sector, company, year, sort })
+      // console.log('chart/qs update', { sector, company, year, sort })
       queryString.setAll({ sector, company, year, sort });
     });
 

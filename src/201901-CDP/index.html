@@ -1,16 +1,19 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Coclear CDP Data Visualization</title>
   <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans|Roboto" rel="stylesheet">
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Promise"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
 <body style="overflow-x: hidden;">
-<!-- root contatiner ------------------------------------------------------------------------------------------------->
-<div class="container-fluid d-xxl-flex">
-  <!-- root row -------------------------------------------------------------------------------------------------------->
+<!-- root contatiner -->
+<div class="container-fluid">
+  <!-- root row -->
   <div class="row">
-    <!-- header / legend ------------------------------------------------------------------------------------------------->
-    <div id="header" class="d-xxl-inline-flex col-12 col-xxl-2 col-xxxl-3 order-xxl-1">
+    <!-- header / legend -->
+    <div id="header" class="col-12 col-xxl-2 col-xxxl-3 order-xxl-1">
       <div class="row pt-3 pt-xxl-0 pl-xxxl-3 pr-xxxl-3">
         <div class="col-12">
           <h1 id="title-text">Carbon Intensity & Life Cycle Emissions</h1>
@@ -31,8 +34,8 @@
       </div>
     </div>
 
-    <!-- filters --------------------------------------------------------------------------------------------------------->
-    <div class="d-xxl-inline-flex col-12 order-xxl-0 filterContainer">
+    <!-- filters -->
+    <div class="col-12 order-xxl-0 filterContainer">
       <form id="filters">
         <div class="form-row">
           <div class="col-12 col-md-6 col-xl-3 pb-2 pb-xl-0">
@@ -68,19 +71,22 @@
         </div>
       </form>
     </div>
-    <!-- end: filters ---------------------------------------------------------------------------------------------------->
+    <!-- end: filters -->
 
-    <!-- visualization / chart ------------------------------------------------------------------------------------------->
-    <div class="d-xxl-inline-flex col-12 col-xxl-8 col-xxxl-6 order-xxl-2 p-0 text-center">
+    <!-- visualization / chart -->
+    <div class="col-12 col-xxl-8 col-xxxl-6 order-xxl-2 p-0 text-center">
       <div class="chart-container mx-auto">
+        <!-- ie10: use to create speace for absolute positioned SVG -->
+        <!-- make it a little taller otherwise chromium seems to cut off the bottom. -->
+        <canvas width="950" height="980"></canvas>
         <svg id="chart" font-family="sans-serif" font-size="10" preserveAspectRatio="xMinYMin meet"></svg>
       </div>
     </div>
-    <!-- end: visualization / chart -------------------------------------------------------------------------------------->
+    <!-- end: visualization / chart -->
 
 
-    <!-- footer ---------------------------------------------------------------------------------------------------------->
-    <div id="footer" class="d-xxl-inline-flex col-12 col-xxl-2 col-xxxl-3 order-xxl-3 mb-3 mb-xxl-0">
+    <!-- footer -->
+    <div id="footer" class="col-12 col-xxl-2 col-xxxl-3 order-xxl-3 mb-3 mb-xxl-0">
       <div class="row pl-xxxl-3 pr-xxxl-3">
         <div class="col-12 col-sm-6 col-xxl-12 pb-3 text-left">
             <div class="row">
@@ -108,14 +114,14 @@
         </div>
       </div>
     </div>
-    <!-- end: foooter ---------------------------------------------------------------------------------------------------->
+    <!-- end: foooter -->
 
   </div>
-  <!-- end: root row ------------------------------------------------------------------------------------------------->
+  <!-- end: root row -->
 </div>
-<!-- end: root container ------------------------------------------------------------------------------------------>
+<!-- end: root container -->
 
-<!-- tooltip ------------------------------------------------------------------------------------------------------>
+<!-- tooltip -->
 <div id="tooltip" style="opacity: 0">
   <div class="col-12">
     <h4 id="tt-topline" class="font-weight-bold"></h4>
@@ -162,7 +168,7 @@
     Data subject to CoClear copyright. Unauthorized use for commercial purposes prohibited. For access to full dataset, please contact info@coclear.co.
   </div>
 </div>
-<!-- end: tooltip------- ------------------------------------------------------------------------------------------->
+<!-- end: tooltip -->
 
 </body>
 </html>

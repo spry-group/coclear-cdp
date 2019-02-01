@@ -58,6 +58,13 @@ module.exports = {
             inject: 'body'
         }),
         new HtmlWebpackPlugin({
+          filename: '404.html',
+          chunks: ['201901-CDP'],
+          template: path.resolve(__dirname, 'src', '201901-CDP/index.html'),
+          favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
+          inject: 'body'
+        }),
+        new HtmlWebpackPlugin({
           filename: '201901-CDP/index.html',
           chunks: ['201901-CDP'],
           template: path.resolve(__dirname, 'src', '201901-CDP/index.html'),

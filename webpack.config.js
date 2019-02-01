@@ -11,11 +11,14 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     context: path.join(__dirname, 'src'),
-    entry: './index.ts',
+    entry: {
+      '201901-CDP': './201901-CDP/index.ts',
+    },
     mode: 'production',
     output: {
       path: path.resolve(__dirname, 'docs'),
-      filename: 'bundle.js'
+      publicPath: '/',
+      filename: '[name]/[name].[hash].js'
     },
     optimization: {
       minimizer: [
@@ -38,8 +41,8 @@ module.exports = {
             { loader: 'sass-loader' }
         ]},
         // Convert images < 8kb to base64 strings
-        { test: /\.(png|jp(e*)g|svg)$/, loader: 'url-loader', options: { limit: 8000 } },
-        { test: /\.(json)/, type: 'javascript/auto', loader: 'url-loader', options: { limit: 8000 }},
+        { test: /\.(png|jp(e*)g|svg)$/, loader: 'url-loader', options: { limit: 8000, name: '[path][hash].[ext]' } },
+        { test: /\.(json)/, type: 'javascript/auto', loader: 'url-loader', options: { limit: 8000, name: '[path][hash].[ext]' }},
         { test: /\.html$/, loader: 'html-loader' }
     ]},
     resolve: {
@@ -49,13 +52,15 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.resolve(__dirname, 'src', '201901-CDP.html'),
+            chunks: ['201901-CDP'],
+            template: path.resolve(__dirname, 'src', '201901-CDP/index.html'),
             favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
             inject: 'body'
         }),
         new HtmlWebpackPlugin({
           filename: '201901-CDP/index.html',
-          template: path.resolve(__dirname, 'src', '201901-CDP.html'),
+          chunks: ['201901-CDP'],
+          template: path.resolve(__dirname, 'src', '201901-CDP/index.html'),
           favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
           inject: 'body'
         }),
@@ -66,7 +71,7 @@ module.exports = {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: "[name].css",
+          filename: "[name]/[hash].css",
           chunkFilename: "[id].css"
       })
     ]

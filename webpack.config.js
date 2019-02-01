@@ -48,9 +48,16 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src', 'index.html'),
+            filename: 'index.html',
+            template: path.resolve(__dirname, 'src', '201901-CDP.html'),
             favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
             inject: 'body'
+        }),
+        new HtmlWebpackPlugin({
+          filename: '201901-CDP/index.html',
+          template: path.resolve(__dirname, 'src', '201901-CDP.html'),
+          favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
+          inject: 'body'
         }),
         new CompressionPlugin({
           test: /\.(json|js|css|html)$/i,

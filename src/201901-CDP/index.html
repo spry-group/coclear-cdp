@@ -15,8 +15,10 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    gtag('config', 'UA-133866145-1');
+    gtag('config', 'UA-133866145-1', {
+      'custom_map': { 'dimension1': 'domain'}
+    });
+    gtag('set', {'domain': 'carboncatalogue.coclear.co'});
   </script>
 
 </head>

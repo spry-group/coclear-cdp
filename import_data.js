@@ -139,7 +139,7 @@ function parseCopy(rawdata, column_headers) {
 
 function writeJson(data, copy) {
   try {
-    fs.writeFileSync('./content.json', JSON.stringify({data, copy}));
+    fs.writeFileSync('./src/201901-CDP/content.json', JSON.stringify({data, copy}));
   }
   catch(error) {
     throw new Error(`Error parsing copy': ${error}`);

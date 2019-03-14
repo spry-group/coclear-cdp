@@ -1,0 +1,78 @@
+version: 2
+
+jobs:
+  checkout_code:
+    docker:
+      # matching the version of nodejs types we required in package.json
+      - image: circleci/node:10.12
+    working_directory: ~/coclear-cdp
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/coclear-cdp
+
+  install_dependencies:
+    docker:
+      - image: circleci/node:10.12
+    working_directory: ~/coclear-cdp
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run: 'npm install'
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+  update_data:
+    docker:
+      - image: circleci/node:10.12
+    working_directory: ~/coclear-cdp
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - add_ssh_keys:
+          fingerprints:
+            - "f5:8a:37:38:bb:fa:84:f7:60:d6:4b:46:57:35:ab:7b" #TODO: change to sprybot ssk key hash once uploaded
+      - run:
+          name: update data
+          command: 'npm run update-data'
+      - run:
+          name: commit and push to github
+          command: |
+            git add src/201901-CDP/content.json
+            git config user.email "support@spry-group.com"
+            git config user.name "Spry Bot"
+            git commit -m $'chore: update content.json `date`\n\n[skip ci]'
+            mkdir -p ~/.ssh
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            git push --set-upstream origin master
+
+workflows:
+  version: 2
+  update_data:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - checkout_code
+      - install_dependencies:
+          requires:
+            - checkout_code
+      - update_data:
+          requires:
+            - install_dependencies

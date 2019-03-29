@@ -53,7 +53,7 @@ jobs:
             git add src/201901-CDP/content.json
             git config user.email "support@spry-group.com"
             git config user.name "Spry Bot"
-            git commit -m $'chore: update content.json `date`\n\n[skip ci]'
+            git commit -m $'chore: update content.json\n\n[skip ci]'
             mkdir -p ~/.ssh
             ssh-keyscan -H github.com >> ~/.ssh/known_hosts
             git push --set-upstream origin master

@@ -53,6 +53,8 @@ jobs:
             git add src/201901-CDP/content.json
             git config user.email "support@spry-group.com"
             git config user.name "Spry Bot"
+            npm run build
+            git add -A
             git commit -m $'chore: update content.json\n\n[skip ci]'
             mkdir -p ~/.ssh
             ssh-keyscan -H github.com >> ~/.ssh/known_hosts

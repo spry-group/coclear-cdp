@@ -7,6 +7,7 @@ import_data();
 
 async function import_data() {
   try {
+    /* backup of document created at 1y-bcX_Jk8OPGXW9M8IizkuhNQ0b-M2068d1iWJdSp6I in darrel's spry-group account in case upstream ever disappears */
     const dataUrl = 'https://sheets.googleapis.com/v4/spreadsheets/1FKNZgxGHjQt9tQ-qmrst1TwK67FgAh7blCL1o-te_3Y/values/A:AZ?key=AIzaSyA-F8PTqmCvmlWUPmKo8mVMS2siV7kIpZw';
     const rawdata = await fetchRawData(dataUrl)
     const column_headers = rawdata.shift();
